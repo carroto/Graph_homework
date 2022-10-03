@@ -17,7 +17,7 @@
                 </TransformGroup>
             </Button.RenderTransform>
         </Button>
-        <Button Content="全部执行" HorizontalAlignment="Left" Margin="26,361,0,0" VerticalAlignment="Top" Height="30" Width="99" Click="Button_Click"/>
+        <Button Content="全部执行" HorizontalAlignment="Left" Margin="24,361,0,0" VerticalAlignment="Top" Height="30" Width="99" Click="Button_Click"/>
         <TextBlock HorizontalAlignment="Left" Margin="11,247,0,0" TextWrapping="Wrap" Text="选择算法：" VerticalAlignment="Top" Height="21" Width="96"/>
         <ComboBox HorizontalAlignment="Left" Margin="26,273,0,0" VerticalAlignment="Top" Width="120" SelectionChanged="ComboBox_SelectionChanged" Height="23">
             <TextBlock TextWrapping="Wrap" Text="算法一"/>
