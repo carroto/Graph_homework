@@ -20,9 +20,11 @@ namespace homework
     /// </summary>
     public partial class MainWindow : Window
     {
+        Graph graph;
         public MainWindow()
         {
             InitializeComponent();
+            
         }
 
 
@@ -35,11 +37,14 @@ namespace homework
             {
                 
                 int count = int.Parse(count_input.Text);
+                
+                graph = new Graph(count);
                 int linecount = node_input.LineCount;
                 for(int i = 0; i < linecount; i++)
                 {
                     string s = node_input.GetLineText(i);
-                    int a = s[0] - '0'; int b = s[2] - '0';
+                    int a = s[0] - '0'; int b = s[2] - '0';int c = s[3] - '0';// ！！！！
+                    graph.add(a, b, c);
                     MessageBox.Show("当前输入节点" + Convert.ToString(a) +" " + Convert.ToString(b));
                 }
                 
