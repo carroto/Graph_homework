@@ -25,34 +25,26 @@ namespace homework
             InitializeComponent();
         }
 
-        private void TextBox_TextChanged(object sender, TextChangedEventArgs e)
+
+
+        private void Button_Click_1(object sender, RoutedEventArgs e)
         {
-
-        }
-
-        private void ListBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
-        {
-
-        }
-
-        private void ComboBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
-        {
-
-        }
-
-        private void Button_Click(object sender, RoutedEventArgs e)
-        {
-
-        }
-
-        private void ListBox_SelectionChanged_1(object sender, SelectionChangedEventArgs e)
-        {
-
-        }
-
-        private void ListBox_SelectionChanged_2(object sender, SelectionChangedEventArgs e)
-        {
-
+            if (count_input.Text == "") MessageBox.Show("请输入节点总数");
+            else if (node_input.Text == "") MessageBox.Show("请输入建图节点");
+            else
+            {
+                
+                int count = int.Parse(count_input.Text);
+                int linecount = node_input.LineCount;
+                for(int i = 0; i < linecount; i++)
+                {
+                    string s = node_input.GetLineText(i);
+                    int a = s[0] - '0'; int b = s[2] - '0';
+                    MessageBox.Show("当前输入节点" + Convert.ToString(a) +" " + Convert.ToString(b));
+                }
+                
+            }
+            
         }
     }
     public class graph

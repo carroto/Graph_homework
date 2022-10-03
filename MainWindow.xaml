@@ -5,31 +5,30 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:homework"
         mc:Ignorable="d"
-        Title="MainWindow" Height="450" Width="800">
+        Title="MainWindow" Height="560" Width="1012" ResizeMode="CanMinimize">
     <Grid RenderTransformOrigin="0.516,0.539">
-        <Button Content="单步执行" HorizontalAlignment="Left" Margin="26,320,0,0" VerticalAlignment="Top" RenderTransformOrigin="0.5,0.5" Height="29" Width="100" Click="Button_Click">
-            <Button.RenderTransform>
-                <TransformGroup>
-                    <ScaleTransform/>
-                    <SkewTransform/>
-                    <RotateTransform Angle="-360.177"/>
-                    <TranslateTransform/>
-                </TransformGroup>
-            </Button.RenderTransform>
-        </Button>
-        <Button Content="全部执行" HorizontalAlignment="Left" Margin="24,361,0,0" VerticalAlignment="Top" Height="30" Width="99" Click="Button_Click"/>
-        <TextBlock HorizontalAlignment="Left" Margin="11,247,0,0" TextWrapping="Wrap" Text="选择算法：" VerticalAlignment="Top" Height="21" Width="96"/>
-        <ComboBox HorizontalAlignment="Left" Margin="26,273,0,0" VerticalAlignment="Top" Width="120" SelectionChanged="ComboBox_SelectionChanged" Height="23">
-            <TextBlock TextWrapping="Wrap" Text="算法一"/>
-            <TextBlock TextWrapping="Wrap" Text="算法二"/>
-            <TextBlock TextWrapping="Wrap" Text="算法三"/>
-        </ComboBox>
-        <ListBox d:ItemsSource="{d:SampleData ItemCount=5}" Margin="614,0,95,0" SelectionChanged="ListBox_SelectionChanged_1"/>
-        <ListBox d:ItemsSource="{d:SampleData ItemCount=5}" Margin="705,0,0,0" SelectionChanged="ListBox_SelectionChanged_2"/>
-        <TextBlock HorizontalAlignment="Left" Margin="10,10,0,0" TextWrapping="Wrap" Text="Node Count" VerticalAlignment="Top" Height="19" Width="130"/>
-        <TextBlock HorizontalAlignment="Left" Margin="10,65,0,0" TextWrapping="Wrap" Text="Graph Data (Directed)" VerticalAlignment="Top"/>
-        <TextBox HorizontalAlignment="Left" Margin="10,34,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="120" TextChanged="TextBox_TextChanged"/>
-        <ListBox d:ItemsSource="{d:SampleData ItemCount=5}" Margin="11,85,714,208" SelectionChanged="ListBox_SelectionChanged"/>
-
+        <Grid.RowDefinitions>
+            <RowDefinition Height="29*"/>
+            <RowDefinition Height="365*"/>
+            <RowDefinition Height="41*"/>
+        </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="19*"/>
+            <ColumnDefinition Width="143*"/>
+            <ColumnDefinition Width="43*"/>
+            <ColumnDefinition Width="425*"/>
+            <ColumnDefinition Width="10*"/>
+            <ColumnDefinition Width="135*"/>
+            <ColumnDefinition Width="25*"/>
+        </Grid.ColumnDefinitions>
+        <StackPanel Grid.Row="0" Grid.Column="0" Grid.RowSpan="3" Grid.ColumnSpan="2">
+            <TextBlock Height="28"></TextBlock>
+            <TextBlock Text="总结点个数：" Margin="5 5 5 5" Height="18" Width="118"></TextBlock>
+            <TextBox x:Name="count_input" Margin="15 0 10 20" Height="30" FontSize="16"></TextBox>
+            <TextBlock Text="建图节点框" Margin="5 5 5 5" Height="18" Width="118"></TextBlock>
+            <TextBox x:Name="node_input" Margin="15 0 10 20" Height="138" FontSize="16" AcceptsReturn="True" ></TextBox>
+            <Button Content="建图" Margin="15" Height="39" Click="Button_Click_1"></Button>
+        </StackPanel>
+        <Canvas Grid.Column="3" Grid.Row="1" Grid.ColumnSpan="1" Background="#FFB9D6FF" Opacity="0.7" Margin="0,0,0,8"/>
     </Grid>
 </Window>
