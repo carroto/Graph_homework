@@ -29,6 +29,6 @@
             <TextBox x:Name="node_input" Margin="15 0 10 20" Height="138" FontSize="16" AcceptsReturn="True" ></TextBox>
             <Button Content="建图" Margin="15" Height="39" Click="Button_Click_1"></Button>
         </StackPanel>
-        <Canvas Grid.Column="3" Grid.ColumnSpan="1" Background="#FFB9D6FF" Opacity="0.7" Margin="0,0,0,8" Grid.Row="1"/>
+        <Canvas x:Name="playground" Grid.Column="3" Grid.ColumnSpan="1" Background="#FFB9D6FF" Opacity="0.7" Margin="0,0,0,8" Grid.Row="1"/>
     </Grid>
 </Window>

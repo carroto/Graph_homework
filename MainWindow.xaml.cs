@@ -36,7 +36,7 @@ namespace homework
             else
             {
                 
-                int count = int.Parse(count_input.Text); // 获得当前节点个数
+                int count = int.Parse(count_input.Text); /// 获得当前节点个数
                 
                 graph = new Graph(count);               // 初始化图
                 int linecount = node_input.LineCount;
@@ -55,9 +55,10 @@ namespace homework
                 }
 
 
-                // 测试bfs
+                
                 List<List<Node>> res = graph.bfs(0);
 
+                /// 测试bfs///////////////////////////////////////////
                 string ans = "";
                 for( int i = 0; i < res.Count; i++)
                 {
@@ -75,8 +76,22 @@ namespace homework
                     ans += "\r\n";
                 }
                 MessageBox.Show(ans);
+                ////////////////////////////////////////////
+
+                Generate_Graph(res, 10);
+
             }
             
+        }
+
+
+        public void Generate_Graph(List<List<Node>> source, int max_nodes)
+        {
+            Ellipse e = new Ellipse();
+            e.Width = e.Height = 10;
+            e.Fill = new SolidColorBrush(Color.FromRgb(108, 165, 178));
+            Canvas.SetLeft(e, 10);Canvas.SetTop(e, 10);
+            playground.Children.Add(e);
         }
     }
 
