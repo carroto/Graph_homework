@@ -50,21 +50,27 @@ namespace homework
                     }
                     int a = s[0] - '0'; int b = s[2] - '0';int c = s[4] - '0';// ！！！！根据输入字符串中获得起点,终点, 边权(待修改)
                     graph.add(a, b, c);         // 加边
+                    graph.add(b, a, c);
                     //MessageBox.Show("当前输入节点" + Convert.ToString(a) +" " + Convert.ToString(b));
                 }
 
 
                 // 测试bfs
-                List<List<Node>> res = graph.bfs(1);
+                List<List<Node>> res = graph.bfs(0);
 
                 string ans = "";
                 for( int i = 0; i < res.Count; i++)
                 {
                     for(int j = 0; j < res[i].Count; j++)
                     {
-                        ans = ans + ("("+res[i][j].w.ToString()+")");
-                        if (j != 0) ans += "->";
-                        ans += res[i][j].t.ToString();
+                        
+                        if (j != 0)
+                        {
+                            
+                            ans += "->";
+                        }
+                        ans += (res[i][j].t + 1).ToString();
+                        ans = ans + ("(" + (res[i][j].s + 1).ToString() + ")");
                     }
                     ans += "\r\n";
                 }
