@@ -36,41 +36,42 @@ namespace homework
             else
             {
                 
-                int count = int.Parse(count_input.Text);
+                int count = int.Parse(count_input.Text); // 获得当前节点个数
                 
-                graph = new Graph(count);
+                graph = new Graph(count);               // 初始化图
                 int linecount = node_input.LineCount;
                 for(int i = 0; i < linecount; i++)
                 {
-                    string s = node_input.GetLineText(i);
-                    int a = s[0] - '0'; int b = s[2] - '0';int c = s[3] - '0';// ！！！！
-                    graph.add(a, b, c);
-                    MessageBox.Show("当前输入节点" + Convert.ToString(a) +" " + Convert.ToString(b));
+                    string s = node_input.GetLineText(i);   // 根据输入建图
+                    if(s.Length != 5 && s.Length != 6)
+                    {
+                        MessageBox.Show("输入异常：建图节点框输入异常\r\n\r\n正确输入格式应为\r\n \t起点 终点 权值\r\n\t起点 终点 权值\r\n\t...");
+                        break;
+                    }
+                    int a = s[0] - '0'; int b = s[2] - '0';int c = s[4] - '0';// ！！！！根据输入字符串中获得起点,终点, 边权(待修改)
+                    graph.add(a, b, c);         // 加边
+                    //MessageBox.Show("当前输入节点" + Convert.ToString(a) +" " + Convert.ToString(b));
                 }
-                
+
+
+                // 测试bfs
+                List<List<Node>> res = graph.bfs(1);
+
+                string ans = "";
+                for( int i = 0; i < res.Count; i++)
+                {
+                    for(int j = 0; j < res[i].Count; j++)
+                    {
+                        ans = ans + ("("+res[i][j].w.ToString()+")");
+                        if (j != 0) ans += "->";
+                        ans += res[i][j].t.ToString();
+                    }
+                    ans += "\r\n";
+                }
+                MessageBox.Show(ans);
             }
             
         }
     }
-    public class graph
-    {
-        //construct the data structure
 
-        public void create()
-        {
-            //create graph by the input box
-            //or it will be NULL
-        }
-        public void algorithm1()
-        {
-            //once choiced in the box, use this to travel
-        }
-        public void travel()
-        {
-            //parameter: choice in the front box:  algorithm   travel-way
-
-            //while traveling, update the open-closed form
-            //draw the node on the front page
-        }
-    }
 }
