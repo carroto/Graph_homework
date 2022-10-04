@@ -67,7 +67,7 @@ namespace homework
                         if (j != 0)
                         {
                             
-                            ans += "->";
+                            ans += "--";
                         }
                         ans += (res[i][j].t + 1).ToString();
                         ans = ans + ("(" + (res[i][j].s + 1).ToString() + ")");
