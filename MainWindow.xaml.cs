@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Security.Cryptography;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
@@ -42,16 +43,52 @@ namespace homework
                 int linecount = node_input.LineCount;
                 for(int i = 0; i < linecount; i++)
                 {
-                    string s = node_input.GetLineText(i);   // 根据输入建图
-                    if(s.Length != 5 && s.Length != 6 && s.Length != 7)
+                    string s = node_input.GetLineText(i);
+                    //count_input 为输入的节点个数
+                    //posiible illegal input:
+                    //number
+                    //number-space
+                    //number-space-number:2
+                    //number-space-number-space:3
+
+                    //right:number-space-number-space-number
+
+                    string[] temp = s.Split(' ');
+                    //MessageBox.Show("temp.length:" + temp.Length);
+                    if(temp.Length != 3 || s == "\r\n")
+                    {
+                        MessageBox.Show("Input error!\r\n Do not end with 'Enter'\r\nInput include origin destination weight");
+                        break;
+                        return;
+                    }
+                    if (temp.Length == 3)
+                    {
+                        //针对第四种输入情形的特判
+                        int last = s.LastIndexOf(' ');
+                        if(last == s.Length - 1)
+                        {
+                            MessageBox.Show("input error");
+                            break;
+                            return;
+                        }
+                    }
+
+                    int a = Convert.ToInt32(temp[0]);
+                    int b = Convert.ToInt32(temp[1]);
+                    int c = Convert.ToInt32(temp[2]);
+
+                    //MessageBox.Show("a=" + a + "b=" + b + "c=" + c);
+
+                    if (a > count || b > count || c > count)
                     {
                         MessageBox.Show("输入异常：建图节点框输入异常\r\n\r\n正确输入格式应为\r\n \t起点 终点 权值\r\n\t起点 终点 权值\r\n\t...");
                         break;
+                        return;
                     }
-                    int a = s[0] - '0'; int b = s[2] - '0';int c = s[4] - '0';// ！！！！根据输入字符串中获得起点,终点, 边权(待修改)
+
                     graph.add(a, b, c);         // 加边
                     graph.add(b, a, c);
-                    //MessageBox.Show("当前输入节点" + Convert.ToString(a) +" " + Convert.ToString(b));
+                    MessageBox.Show("当前输入节点" + Convert.ToString(a) + " " + Convert.ToString(b));
                 }
 
 
