@@ -78,19 +78,23 @@ namespace homework
                 MessageBox.Show(ans);
                 ////////////////////////////////////////////
 
-                Generate_Graph(res, 10);
+                Generate_Graph(res, 10, 10, count);
 
             }
             
         }
 
 
-        public void Generate_Graph(List<List<Node>> source, int max_nodes)
+        public void Generate_Graph(List<List<Node>> source, int max_nodes, int max_depth, int count)
         {
             Ellipse e = new Ellipse();
-            e.Width = e.Height = 10;
+            e.Width = e.Height = 50;
             e.Fill = new SolidColorBrush(Color.FromRgb(108, 165, 178));
-            Canvas.SetLeft(e, 10);Canvas.SetTop(e, 10);
+
+            double y = 360 / 2;
+            double x = 30;
+
+            Canvas.SetLeft(e, x);Canvas.SetTop(e, y);
             playground.Children.Add(e);
         }
     }

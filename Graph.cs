@@ -13,6 +13,8 @@ namespace homework
         public int t;
         public int w;
         public int depth;
+        public int locate_x;
+        public int locate_y;
         public Node(int s, int t, int w)
         {
             this.s = s;
