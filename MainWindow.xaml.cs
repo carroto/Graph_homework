@@ -43,7 +43,7 @@ namespace homework
                 for(int i = 0; i < linecount; i++)
                 {
                     string s = node_input.GetLineText(i);   // 根据输入建图
-                    if(s.Length != 5 && s.Length != 6)
+                    if(s.Length != 5 && s.Length != 6 && s.Length != 7)
                     {
                         MessageBox.Show("输入异常：建图节点框输入异常\r\n\r\n正确输入格式应为\r\n \t起点 终点 权值\r\n\t起点 终点 权值\r\n\t...");
                         break;
