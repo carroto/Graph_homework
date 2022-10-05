@@ -71,7 +71,7 @@ namespace homework
             }
             que.Enqueue(s); // 将首节点入队
             vis[s] = 1;
-            for (int i = 0; i < count; i++)
+            for (int i = 0; i <= count; i++)
             {
                 res.Add(new List<Node>()); // 
             }

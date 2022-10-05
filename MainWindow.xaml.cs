@@ -88,7 +88,7 @@ namespace homework
 
                     graph.add(a, b, c);         // 加边
                     graph.add(b, a, c);
-                    MessageBox.Show("当前输入节点" + Convert.ToString(a) + " " + Convert.ToString(b));
+                    //MessageBox.Show("当前输入节点" + Convert.ToString(a) + " " + Convert.ToString(b));
                 }
 
 
