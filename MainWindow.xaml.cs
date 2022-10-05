@@ -115,24 +115,32 @@ namespace homework
                 MessageBox.Show(ans);
                 ////////////////////////////////////////////
 
-                Generate_Graph(res, 10, 10, count);
+                //Generate_Graph(res, 10, 10, count);
 
             }
             
         }
 
 
-        public void Generate_Graph(List<List<Node>> source, int max_nodes, int max_depth, int count)
+        public void Generate_Graph(List<List<Node>> source, int count)
         {
-            Ellipse e = new Ellipse();
-            e.Width = e.Height = 50;
-            e.Fill = new SolidColorBrush(Color.FromRgb(108, 165, 178));
+            //Ellipse e = new Ellipse();
+            //e.Width = e.Height = 50;
+            //e.Fill = new SolidColorBrush(Color.FromRgb(108, 165, 178));
 
-            double y = 360 / 2;
-            double x = 30;
+            //double y = 360 / 2;
+            //double x = 30;
 
-            Canvas.SetLeft(e, x);Canvas.SetTop(e, y);
-            playground.Children.Add(e);
+            //Canvas.SetLeft(e, x);Canvas.SetTop(e, y);
+            //playground.Children.Add(e);
+
+
+            int R = 0;
+
+
+            int du = 360 / count;
+
+            
         }
     }
 
