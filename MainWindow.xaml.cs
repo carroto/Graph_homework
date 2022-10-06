@@ -22,6 +22,8 @@ namespace homework
     public partial class MainWindow : Window
     {
         Graph graph;
+
+        
         public MainWindow()
         {
             InitializeComponent();
@@ -38,7 +40,9 @@ namespace homework
             {
                 
                 int count = int.Parse(count_input.Text); /// 获得当前节点个数
+
                 
+
                 graph = new Graph(count);               // 初始化图
                 int linecount = node_input.LineCount;
                 for(int i = 0; i < linecount; i++)
@@ -93,7 +97,7 @@ namespace homework
 
 
                 
-                List<List<Node>> res = graph.bfs(0);
+                List<List<Node>> res = graph.getList();
 
                 /// 测试bfs///////////////////////////////////////////
                 string ans = "";
@@ -114,33 +118,52 @@ namespace homework
                 }
                 MessageBox.Show(ans);
                 ////////////////////////////////////////////
+                
 
-                //Generate_Graph(res, 10, 10, count);
 
             }
             
         }
 
 
-        public void Generate_Graph(List<List<Node>> source, int count)
+        public void Generate_Graph(int count)
         {
-            //Ellipse e = new Ellipse();
-            //e.Width = e.Height = 50;
-            //e.Fill = new SolidColorBrush(Color.FromRgb(108, 165, 178));
-
-            //double y = 360 / 2;
-            //double x = 30;
-
-            //Canvas.SetLeft(e, x);Canvas.SetTop(e, y);
-            //playground.Children.Add(e);
+            
 
 
-            int R = 0;
+            int R = 100; int x0 = 283; int y0 = 194;int r = 25;
+
+            double du = 2 * 3.1415926535 / count;
 
 
-            int du = 360 / count;
+
+            for(int i = 0; i <= count; i++)
+            {
+                Ellipse e = new Ellipse();
+                double y = y0 - Math.Cos(du * i) * R;
+                double x = x0 + Math.Sin(du * i) * R;
+                //MessageBox.Show("创建位置：" + Convert.ToString(x - r) + " " + Convert.ToString(y - r));
+                Canvas.SetLeft(e, x - r); Canvas.SetTop(e, y - r);
+                e.Width = e.Height = 2 * r;
+                e.Fill = new SolidColorBrush(Color.FromRgb(108, 165, 178));
+                playground.Children.Add(e);
+            }
+
 
             
+
+            
+            
+
+
+
+        }
+
+        private void Test(object sender, RoutedEventArgs e)
+        {
+            int test_count = int.Parse(count_input.Text);
+            playground.Children.Clear();
+            Generate_Graph(test_count);
         }
     }
 
