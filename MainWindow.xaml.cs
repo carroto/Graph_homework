@@ -131,22 +131,30 @@ namespace homework
             
 
 
-            int R = 100; int x0 = 283; int y0 = 194;int r = 25;
+            int R = 150; int x0 = 283; int y0 = 194;int r = 25;
 
             double du = 2 * 3.1415926535 / count;
 
 
 
-            for(int i = 0; i <= count; i++)
+            for(int i = 1; i <= count; i++)
             {
                 Ellipse e = new Ellipse();
+                TextBlock l = new TextBlock();
+                l.Text = Convert.ToString(i);
+                l.FontSize = 20;
+
+
                 double y = y0 - Math.Cos(du * i) * R;
                 double x = x0 + Math.Sin(du * i) * R;
                 //MessageBox.Show("创建位置：" + Convert.ToString(x - r) + " " + Convert.ToString(y - r));
-                Canvas.SetLeft(e, x - r); Canvas.SetTop(e, y - r);
+                Canvas.SetLeft(e, x - r/2); Canvas.SetTop(e, y - r/2);
+                Canvas.SetLeft(l, x); Canvas.SetTop(l, y);
+
                 e.Width = e.Height = 2 * r;
                 e.Fill = new SolidColorBrush(Color.FromRgb(108, 165, 178));
                 playground.Children.Add(e);
+                playground.Children.Add(l);
             }
 
 

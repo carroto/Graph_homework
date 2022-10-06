@@ -34,7 +34,10 @@
                 <ComboBoxItem Content="广度优先搜索"/>
             </ComboBox>
             <Button Content="执行算法" Margin="15" Height="39" Click="Button_Click"/>
+
         </StackPanel>
+
         <Canvas x:Name="playground" Grid.Column="3" Grid.ColumnSpan="1" Background="#FFB9D6FF" Opacity="0.7" Margin="0,0,0,8" Grid.Row="1"/>
+        <Button Grid.Column="5" Content="test" Margin="20,0,10,0" Grid.Row="1" VerticalAlignment="Top" Height="63" FontSize="16" Background="#FFDED8BA" Opacity="0.7" Click="Test"/>
     </Grid>
 </Window>
