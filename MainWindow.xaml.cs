@@ -92,7 +92,7 @@ namespace homework
                     }
 
                     graph.add(a, b, c);         // 加边
-                    graph.add(b, a, c);
+                    if(directed.IsChecked == false) graph.add(b, a, c);
                     //MessageBox.Show("当前输入节点" + Convert.ToString(a) + " " + Convert.ToString(b));
                 }
 
@@ -126,6 +126,18 @@ namespace homework
             
         }
 
+        struct graph_node
+        {
+            public int id;
+            public double x;
+            public double y;
+            public graph_node(int id, double x, double y)
+            {
+                this.id = id;
+                this.x = x;
+                this.y = y;
+            }
+        }
 
         public void Generate_Graph(int count)
         {
@@ -137,6 +149,8 @@ namespace homework
             double du = 2 * 3.1415926535 / count;
 
 
+            List<graph_node> graph_data = new List<graph_node>();
+            
 
             for(int i = 1; i <= count; i++)
             {
@@ -151,6 +165,10 @@ namespace homework
                 //MessageBox.Show("创建位置：" + Convert.ToString(x - r) + " " + Convert.ToString(y - r));
                 Canvas.SetLeft(e, x - r/2); Canvas.SetTop(e, y - r/2);
                 Canvas.SetLeft(l, x); Canvas.SetTop(l, y);
+                Canvas.SetZIndex(e, 1);
+                Canvas.SetZIndex(l, 1);
+                graph_data.Add(new graph_node(i, x + r / 2, y + r / 2));
+
 
                 e.Width = e.Height = 2 * r;
                 e.Fill = new SolidColorBrush(Color.FromRgb(108, 165, 178));
@@ -160,7 +178,42 @@ namespace homework
 
             List<List<Node>> nodeslist = graph.getList();
 
+            List<int> t = new List<int>();
 
+            for(int i = 0; i < nodeslist.Count; i++)
+            {
+
+                if (nodeslist[i].Count != 0)
+                {
+                    for (int j = 0; j < nodeslist[i].Count; j++)
+                    {
+                        
+                        //MessageBox.Show(Convert.ToString(nodeslist[i][j].t + 1));
+                        t.Add(nodeslist[i][j].t + 1);
+                        Line l = new Line();
+                        l.Stroke = Brushes.Black;
+                        l.StrokeThickness = 3;
+                        l.X1 = graph_data[i].x;l.Y1 = graph_data[i].y;
+                        l.X2 = graph_data[nodeslist[i][j].t].x; l.Y2 = graph_data[nodeslist[i][j].t].y;
+
+                        Canvas.SetZIndex(l, 0);
+
+
+                        Line l1 = new Line(); Line l2 = new Line();
+                        l1.Stroke = Brushes.Black; l2.Stroke = Brushes.Black;
+                        l1.StrokeThickness = 3; l2.StrokeThickness = 3;
+
+                        l1.Y1 = l.Y1 - (R - r)/R * (l.Y1 - l.Y2); l2.Y1 = l.Y1 - (R - r) / R * (l.Y1 - l.Y2);
+
+                        l1.X1 = l.X1 - (R - r)/R * (l.X1 - l.X2); l2.X2 = l.X1 - (R - r) / R * (l.X1 - l.X2);
+
+                        playground.Children.Add(l);
+
+                    }
+                }
+                    
+                
+            }
 
 
             
