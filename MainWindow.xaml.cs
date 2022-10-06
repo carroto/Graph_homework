@@ -14,6 +14,7 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 
+
 namespace homework
 {
     /// <summary>
@@ -156,6 +157,10 @@ namespace homework
                 playground.Children.Add(e);
                 playground.Children.Add(l);
             }
+
+            List<List<Node>> nodeslist = graph.getList();
+
+
 
 
             
