@@ -165,6 +165,12 @@ namespace homework
             playground.Children.Clear();
             Generate_Graph(test_count);
         }
+
+        private void Button_Click(object sender, RoutedEventArgs e)
+        {
+            var t = new Display();
+            t.ShowDialog();
+        }
     }
 
 }
