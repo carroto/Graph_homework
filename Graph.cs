@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 using System.Windows;
 namespace homework
 {
-    public class Edge
+    public class Node
     {
         public int s;//source
         public int t;//target
@@ -16,7 +16,7 @@ namespace homework
         //depth用于绘图，判定层数
         public int locate_x;//坐标
         public int locate_y;
-        public Edge(int s, int t, int w)
+        public Node(int s, int t, int w)
         {
             this.s = s;
             this.t = t;
@@ -33,16 +33,16 @@ namespace homework
 
 
         public int count;/// 总结点个数
-        public List<List<Edge>> nodeList;///邻接表
+        public List<List<Node>> nodeList;///邻接表
         Queue<int> que;// 
 
         public Graph(int count)
         {
             this.count = count;
-            nodeList = new List<List<Edge>>();
+            nodeList = new List<List<Node>>();
             for (int i = 0; i < count; i++) // 初始化时给邻接表开辟空间
             {
-                nodeList.Add(new List<Edge>());
+                nodeList.Add(new List<Node>());
             }
             return;
         }
@@ -50,20 +50,20 @@ namespace homework
 
         public void add(int s, int t, int w)// 加边
         {
-            nodeList[s - 1].Add(new Edge(s - 1, t - 1, w));
+            nodeList[s - 1].Add(new Node(s - 1, t - 1, w));
             //数组下标和实际数量的差别
         }
 
 
-        public List<List<Edge>> getList() /// 获取图的列表
+        public List<List<Node>> getList() /// 获取图的列表
         {
             return nodeList;
         }
 
 
-        public List<List<Edge>> bfs(int s) /// 建图bfs
+        public List<List<Node>> bfs(int s) /// 建图bfs
         {
-            List<List<Edge>> res = new List<List<Edge>>();
+            List<List<Node>> res = new List<List<Node>>();
             que = new Queue<int>();
             int[] vis = new int[count];
             if (nodeList == null)  // 特判:是否建图出错
@@ -75,7 +75,7 @@ namespace homework
             vis[s] = 1;
             for (int i = 0; i <= count; i++)
             {
-                res.Add(new List<Edge>()); // 
+                res.Add(new List<Node>()); // 
             }
             while (que.Count > 0) 
             {
