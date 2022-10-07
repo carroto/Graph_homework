@@ -32,7 +32,6 @@ namespace homework
         }
 
 
-
         private void Button_Click_1(object sender, RoutedEventArgs e)
         {
             if (count_input.Text == "") MessageBox.Show("请输入节点总数");
@@ -144,7 +143,7 @@ namespace homework
             
 
 
-            int R = 150; int x0 = 283; int y0 = 194;int r = 25;
+            double R = 150; double x0 = 283; double y0 = 194;double r = 25;
 
             double du = 2 * 3.1415926535 / count;
 
@@ -178,7 +177,7 @@ namespace homework
 
             List<List<Node>> nodeslist = graph.getList();
 
-            List<int> t = new List<int>();
+            
 
             for(int i = 0; i < nodeslist.Count; i++)
             {
@@ -189,16 +188,24 @@ namespace homework
                     {
                         
                         //MessageBox.Show(Convert.ToString(nodeslist[i][j].t + 1));
-                        t.Add(nodeslist[i][j].t + 1);
-                        Line l = new Line();
+                        
+                        Line l = new Line(); // 该直线为图中连线
                         l.Stroke = Brushes.Black;
-                        l.StrokeThickness = 3;
+                        l.StrokeThickness = 3; 
                         l.X1 = graph_data[i].x;l.Y1 = graph_data[i].y;
                         l.X2 = graph_data[nodeslist[i][j].t].x; l.Y2 = graph_data[nodeslist[i][j].t].y;
-
                         Canvas.SetZIndex(l, 0);
 
+                        ///////////--------------------------------------------------------------------//////////////
 
+                        Ellipse mark = new Ellipse();
+                        mark.Height = 5; mark.Width = 5;
+                        double xm = l.X2 + (r / R) * (x0 - l.X2);
+                        double ym = l.Y2 + (r / R) * (y0 - l.Y2);
+                        mark.Fill = Brushes.Red;
+                        Canvas.SetLeft(mark, xm); Canvas.SetTop(mark, ym);
+                        Canvas.SetZIndex(mark, 9);
+                        playground.Children.Add(mark);
                         
 
                         playground.Children.Add(l);
@@ -208,14 +215,6 @@ namespace homework
                     
                 
             }
-
-
-            
-
-            
-            
-
-
 
         }
 
