@@ -14,8 +14,7 @@ namespace homework
         public int w;//weight
         public int depth;
         //depth用于绘图，判定层数
-        public int locate_x;//坐标
-        public int locate_y;
+
         public Edge(int s, int t, int w)
         {
             this.s = s;
@@ -25,12 +24,9 @@ namespace homework
         }
     }
 
-
-
     public class Graph
     {
     /// 图的存储与基本算法
-
 
         public int count;/// 总结点个数
         public List<List<Edge>> nodeList;///邻接表
@@ -60,6 +56,8 @@ namespace homework
             return nodeList;
         }
 
+        //欲实现的算法：BFS，DFS，等代价，深度受限，迭代加深，最佳优先搜索
+        //已实现：BFS
 
         public List<List<Edge>> bfs(int s) /// 建图bfs
         {
