@@ -199,16 +199,10 @@ namespace homework
                         Canvas.SetZIndex(l, 0);
 
 
-                        Line l1 = new Line(); Line l2 = new Line();
-                        l1.Stroke = Brushes.Black; l2.Stroke = Brushes.Black;
-                        l1.StrokeThickness = 3; l2.StrokeThickness = 3;
-
-                        l1.Y1 = l.Y1 - (R - r)/R * (l.Y1 - l.Y2); l2.Y1 = l.Y1 - (R - r) / R * (l.Y1 - l.Y2);
-
-                        l1.X1 = l.X1 - (R - r)/R * (l.X1 - l.X2); l2.X2 = l.X1 - (R - r) / R * (l.X1 - l.X2);
+                        
 
                         playground.Children.Add(l);
-
+                        
                     }
                 }
                     
