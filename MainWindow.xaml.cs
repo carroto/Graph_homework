@@ -99,7 +99,7 @@ namespace homework
                 
                 List<List<Node>> res = graph.getList();
 
-                /// 测试bfs///////////////////////////////////////////
+                //// 测试bfs///////////////////////////////////////////
                 string ans = "";
                 for( int i = 0; i < res.Count; i++)
                 {
