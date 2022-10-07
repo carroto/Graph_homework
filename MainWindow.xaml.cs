@@ -40,15 +40,16 @@ namespace homework
             {
                 
                 int count = int.Parse(count_input.Text); /// 获得当前节点个数
-
-                
-
+        
                 graph = new Graph(count);               // 初始化图
-                int linecount = node_input.LineCount;
+
+                int linecount = node_input.LineCount;//边数目，对此进行建边操作
+
                 for(int i = 0; i < linecount; i++)
                 {
                     string s = node_input.GetLineText(i);
                     //count_input 为输入的节点个数
+
                     //posiible illegal input:
                     //number
                     //number-space
@@ -95,9 +96,7 @@ namespace homework
                     //MessageBox.Show("当前输入节点" + Convert.ToString(a) + " " + Convert.ToString(b));
                 }
 
-
-                
-                List<List<Node>> res = graph.getList();
+                List<List<Edge>> res = graph.getList();
 
                 /// 测试bfs///////////////////////////////////////////
                 string ans = "";
@@ -119,8 +118,6 @@ namespace homework
                 MessageBox.Show(ans);
                 ////////////////////////////////////////////
                 
-
-
             }
             
         }
@@ -128,14 +125,10 @@ namespace homework
 
         public void Generate_Graph(int count)
         {
-            
-
 
             int R = 100; int x0 = 283; int y0 = 194;int r = 25;
 
             double du = 2 * 3.1415926535 / count;
-
-
 
             for(int i = 0; i <= count; i++)
             {
@@ -148,14 +141,6 @@ namespace homework
                 e.Fill = new SolidColorBrush(Color.FromRgb(108, 165, 178));
                 playground.Children.Add(e);
             }
-
-
-            
-
-            
-            
-
-
 
         }
 
