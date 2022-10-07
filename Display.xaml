@@ -27,8 +27,6 @@
                     <ListBox Height="210" Margin="5"/>
                 </StackPanel>
             </Border>
-            <TextBlock Width="10">
-            </TextBlock>
             <Border Margin="10" Width="75" BorderBrush="Black" BorderThickness="1">
                 <StackPanel>
                     <TextBlock Text="Close" Margin="10"/>
@@ -36,5 +34,6 @@
                 </StackPanel>
             </Border>
         </StackPanel>
+        <TextBlock Text="搜索树如下所示：" Grid.Column="1" Margin="10,10,261,10"/>
     </Grid>
 </Window>

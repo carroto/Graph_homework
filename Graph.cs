@@ -9,11 +9,12 @@ namespace homework
 {
     public class Node
     {
-        public int s;
-        public int t;
-        public int w;
+        public int s;//source
+        public int t;//target
+        public int w;//weight
         public int depth;
-        public int locate_x;
+        //depth用于绘图，判定层数
+        public int locate_x;//坐标
         public int locate_y;
         public Node(int s, int t, int w)
         {
@@ -50,6 +51,7 @@ namespace homework
         public void add(int s, int t, int w)// 加边
         {
             nodeList[s - 1].Add(new Node(s - 1, t - 1, w));
+            //数组下标和实际数量的差别
         }
 
 

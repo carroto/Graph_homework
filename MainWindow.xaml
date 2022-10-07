@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:homework"
         mc:Ignorable="d"
-        Title="MainWindow" Height="560" Width="1012" ResizeMode="CanMinimize">
+        Title="Graph" Height="560" Width="1012" ResizeMode="CanMinimize">
     <Grid RenderTransformOrigin="0.516,0.539">
         <Grid.RowDefinitions>
             <RowDefinition Height="36*"/>
