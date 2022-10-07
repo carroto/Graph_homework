@@ -14,6 +14,7 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 
+
 namespace homework
 {
     /// <summary>
@@ -29,7 +30,6 @@ namespace homework
             InitializeComponent();
             
         }
-
 
 
         private void Button_Click_1(object sender, RoutedEventArgs e)
@@ -92,7 +92,7 @@ namespace homework
                     }
 
                     graph.add(a, b, c);         // 加边
-                    graph.add(b, a, c);
+                    if(directed.IsChecked == false) graph.add(b, a, c);
                     //MessageBox.Show("当前输入节点" + Convert.ToString(a) + " " + Convert.ToString(b));
                 }
 
@@ -122,24 +122,95 @@ namespace homework
             
         }
 
+        struct graph_node
+        {
+            public int id;
+            public double x;
+            public double y;
+            public graph_node(int id, double x, double y)
+            {
+                this.id = id;
+                this.x = x;
+                this.y = y;
+            }
+        }
 
         public void Generate_Graph(int count)
         {
+            
 
-            int R = 100; int x0 = 283; int y0 = 194;int r = 25;
+
+            double R = 150; double x0 = 283; double y0 = 194;double r = 25;
 
             double du = 2 * 3.1415926535 / count;
 
-            for(int i = 0; i <= count; i++)
+
+            List<graph_node> graph_data = new List<graph_node>();
+            
+
+            for(int i = 1; i <= count; i++)
             {
                 Ellipse e = new Ellipse();
+                TextBlock l = new TextBlock();
+                l.Text = Convert.ToString(i);
+                l.FontSize = 20;
+
+
                 double y = y0 - Math.Cos(du * i) * R;
                 double x = x0 + Math.Sin(du * i) * R;
                 //MessageBox.Show("创建位置：" + Convert.ToString(x - r) + " " + Convert.ToString(y - r));
-                Canvas.SetLeft(e, x - r); Canvas.SetTop(e, y - r);
+                Canvas.SetLeft(e, x - r/2); Canvas.SetTop(e, y - r/2);
+                Canvas.SetLeft(l, x); Canvas.SetTop(l, y);
+                Canvas.SetZIndex(e, 1);
+                Canvas.SetZIndex(l, 1);
+                graph_data.Add(new graph_node(i, x + r / 2, y + r / 2));
+
+
                 e.Width = e.Height = 2 * r;
                 e.Fill = new SolidColorBrush(Color.FromRgb(108, 165, 178));
                 playground.Children.Add(e);
+                playground.Children.Add(l);
+            }
+
+            List<List<Node>> nodeslist = graph.getList();
+
+            
+
+            for(int i = 0; i < nodeslist.Count; i++)
+            {
+
+                if (nodeslist[i].Count != 0)
+                {
+                    for (int j = 0; j < nodeslist[i].Count; j++)
+                    {
+                        
+                        //MessageBox.Show(Convert.ToString(nodeslist[i][j].t + 1));
+                        
+                        Line l = new Line(); // 该直线为图中连线
+                        l.Stroke = Brushes.Black;
+                        l.StrokeThickness = 3; 
+                        l.X1 = graph_data[i].x;l.Y1 = graph_data[i].y;
+                        l.X2 = graph_data[nodeslist[i][j].t].x; l.Y2 = graph_data[nodeslist[i][j].t].y;
+                        Canvas.SetZIndex(l, 0);
+
+                        ///////////--------------------------------------------------------------------//////////////
+
+                        Ellipse mark = new Ellipse();
+                        mark.Height = 5; mark.Width = 5;
+                        double xm = l.X2 + (r / R) * (x0 - l.X2);
+                        double ym = l.Y2 + (r / R) * (y0 - l.Y2);
+                        mark.Fill = Brushes.Red;
+                        Canvas.SetLeft(mark, xm); Canvas.SetTop(mark, ym);
+                        Canvas.SetZIndex(mark, 9);
+                        playground.Children.Add(mark);
+                        
+
+                        playground.Children.Add(l);
+                        
+                    }
+                }
+                    
+                
             }
 
         }
