@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Microsoft.VisualBasic;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Security.Cryptography;
@@ -14,6 +15,7 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 
+
 namespace homework
 {
     /// <summary>
@@ -22,15 +24,15 @@ namespace homework
     public partial class MainWindow : Window
     {
         Graph graph;
+
+        
         public MainWindow()
         {
             InitializeComponent();
-            
         }
 
 
-
-        private void Button_Click_1(object sender, RoutedEventArgs e)
+        private void Button_Click_1(object sender, RoutedEventArgs e)//建图函数
         {
             if (count_input.Text == "") MessageBox.Show("请输入节点总数");
             else if (node_input.Text == "") MessageBox.Show("请输入建图节点");
@@ -38,29 +40,33 @@ namespace homework
             {
                 
                 int count = int.Parse(count_input.Text); /// 获得当前节点个数
-                
+        
                 graph = new Graph(count);               // 初始化图
-                int linecount = node_input.LineCount;
+
+                int linecount = node_input.LineCount;//边数目，对此进行建边操作
+
                 for(int i = 0; i < linecount; i++)
                 {
                     string s = node_input.GetLineText(i);
                     //count_input 为输入的节点个数
+
                     //posiible illegal input:
                     //number
                     //number-space
                     //number-space-number:2
                     //number-space-number-space:3
 
-                    //right:number-space-number-space-number
+                    //right:number-space-number-space-number3
 
                     string[] temp = s.Split(' ');
-                    //MessageBox.Show("temp.length:" + temp.Length);
-                    if(temp.Length != 3 || s == "\r\n")
+                    if((temp.Length != 3 && temp.Length != 2) || s == "\r\n")
                     {
+                        //前三种错误输入
                         MessageBox.Show("Input error!\r\n Do not end with 'Enter'\r\nInput include origin destination weight");
                         break;
                         return;
                     }
+                    int a = 0; int b = 0; int c = 0;
                     if (temp.Length == 3)
                     {
                         //针对第四种输入情形的特判
@@ -71,15 +77,28 @@ namespace homework
                             break;
                             return;
                         }
+                        a = Convert.ToInt32(temp[0]);
+                        b = Convert.ToInt32(temp[1]);
+                        c = Convert.ToInt32(temp[2]);
                     }
 
-                    int a = Convert.ToInt32(temp[0]);
-                    int b = Convert.ToInt32(temp[1]);
-                    int c = Convert.ToInt32(temp[2]);
+                    if (temp.Length == 2)
+                    {
+                        //针对第四种输入情形的特判
+                        int last = s.LastIndexOf(' ');
+                        if (last == s.Length - 1)
+                        {
+                            MessageBox.Show("input error");
+                            break;
+                            return;
+                        }
+                        a = Convert.ToInt32(temp[0]);
+                        b = Convert.ToInt32(temp[1]);
+                        c = 1;
+                    }
 
-                    //MessageBox.Show("a=" + a + "b=" + b + "c=" + c);
 
-                    if (a > count || b > count || c > count)
+                    if (a > count || b > count)
                     {
                         MessageBox.Show("输入异常：建图节点框输入异常\r\n\r\n正确输入格式应为\r\n \t起点 终点 权值\r\n\t起点 终点 权值\r\n\t...");
                         break;
@@ -87,60 +106,23 @@ namespace homework
                     }
 
                     graph.add(a, b, c);         // 加边
-                    graph.add(b, a, c);
-                    //MessageBox.Show("当前输入节点" + Convert.ToString(a) + " " + Convert.ToString(b));
+                    if(directed.IsChecked == false) graph.add(b, a, c);
                 }
 
+                List<List<Edge>> res = graph.getList(); // 取建图邻接表
 
-                
-                List<List<Node>> res = graph.bfs(0);
-
-                /// 测试bfs///////////////////////////////////////////
-                string ans = "";
-                for( int i = 0; i < res.Count; i++)
-                {
-                    for(int j = 0; j < res[i].Count; j++)
-                    {
-                        
-                        if (j != 0)
-                        {
-                            
-                            ans += "--";
-                        }
-                        ans += (res[i][j].t + 1).ToString();
-                        ans = ans + ("(" + (res[i][j].s + 1).ToString() + ")");
-                    }
-                    ans += "\r\n";
-                }
-                MessageBox.Show(ans);
-                ////////////////////////////////////////////
-
-                //Generate_Graph(res, 10, 10, count);
-
+                Draw.Generate_Graph(ref playground, graph, ((directed.IsChecked == true) ? true : false), count);// 绘制图形
             }
-            
         }
 
+        
 
-        public void Generate_Graph(List<List<Node>> source, int count)
+        
+        
+        private void Button_Click(object sender, RoutedEventArgs e)
         {
-            //Ellipse e = new Ellipse();
-            //e.Width = e.Height = 50;
-            //e.Fill = new SolidColorBrush(Color.FromRgb(108, 165, 178));
-
-            //double y = 360 / 2;
-            //double x = 30;
-
-            //Canvas.SetLeft(e, x);Canvas.SetTop(e, y);
-            //playground.Children.Add(e);
-
-
-            int R = 0;
-
-
-            int du = 360 / count;
-
-            
+            var t = new Display();
+            t.ShowDialog();
         }
     }
 

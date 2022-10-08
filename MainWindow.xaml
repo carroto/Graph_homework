@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:homework"
         mc:Ignorable="d"
-        Title="MainWindow" Height="560" Width="1012" ResizeMode="CanMinimize">
+        Title="Graph" Height="560" Width="1012" ResizeMode="CanMinimize">
     <Grid RenderTransformOrigin="0.516,0.539">
         <Grid.RowDefinitions>
             <RowDefinition Height="36*"/>
@@ -17,19 +17,33 @@
             <ColumnDefinition Width="180*"/>
             <ColumnDefinition Width="33*"/>
             <ColumnDefinition Width="586*"/>
-            <ColumnDefinition Width="28*"/>
-            <ColumnDefinition Width="129*"/>
-            <ColumnDefinition Width="32*"/>
+            <ColumnDefinition Width="18*"/>
+            <ColumnDefinition Width="128*"/>
+            <ColumnDefinition Width="43*"/>
         </Grid.ColumnDefinitions>
         <StackPanel Grid.Row="0" Grid.Column="1" Grid.RowSpan="3" Grid.ColumnSpan="1" Margin="0,0,7,0">
-            <TextBlock Height="28"></TextBlock>
+            <TextBlock Height="13"></TextBlock>
             <TextBlock Text="总结点个数：" Margin="5 5 5 5" Height="18" Width="118"></TextBlock>
             <TextBox x:Name="count_input" Margin="15 0 10 20" Height="30" FontSize="16"></TextBox>
             <TextBlock Text="建图节点框" Margin="5 5 5 5" Height="18" Width="118"></TextBlock>
             <TextBox x:Name="node_input" Margin="15 0 10 20" Height="138" FontSize="16" AcceptsReturn="True" ></TextBox>
             <CheckBox x:Name="directed" Content="是否为有向图" Margin="15 0 0 0" IsChecked="False"></CheckBox>
             <Button Content="建图" Margin="15" Height="39" Click="Button_Click_1"></Button>
+            <ComboBox Margin="15 15 15 15" Height="30" Padding="5">
+                <ComboBoxItem Content="深度优先搜索" IsSelected="True"/>
+                <ComboBoxItem Content="广度优先搜索"/>
+            </ComboBox>
+            <Button Content="执行算法" Margin="15" Height="39" Click="Button_Click"/>
+
         </StackPanel>
-        <Canvas x:Name="playground" Grid.Column="3" Grid.ColumnSpan="1" Background="#FFB9D6FF" Opacity="0.7" Margin="0,0,0,8" Grid.Row="1"/>
+
+
+        <Canvas Grid.Column="3" Grid.ColumnSpan="1" Background="#FFB9D6FF" Opacity="0.7" Margin="0,0,0,8" Grid.Row="1">
+            <Canvas x:Name="playground" Focusable="True" AllowDrop="True"/>
+        </Canvas>
+        <StackPanel Grid.Column="5" Grid.Row="1" Grid.RowSpan="1" Grid.ColumnSpan="1"  Width="128">
+            <TextBlock Height="287" />
+            <Button Content="设置" Margin="5" Height="42"  />
+        </StackPanel>
     </Grid>
 </Window>
