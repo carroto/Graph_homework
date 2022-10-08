@@ -220,6 +220,7 @@ namespace homework
                 }
             }
         }
+        
         private void Button_Click(object sender, RoutedEventArgs e)
         {
             var t = new Display();
