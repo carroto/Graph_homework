@@ -46,7 +46,10 @@ namespace homework
         {
             Line l1 = new Line();
             Line l2 = new Line();
-            testTarget(ref playground, hx, hy);
+            //testTarget(ref playground, hx, hy); // 测试箭头顶点位置是否正确
+
+
+
         }
 
         /// <summary>
