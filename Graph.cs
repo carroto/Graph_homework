@@ -5,8 +5,13 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
+using System.Windows.Controls;
+using System.Windows.Shapes;
 namespace homework
 {
+    /// <summary>
+    /// 邻接表
+    /// </summary>
     public class Edge
     {
         public int s;//source
@@ -24,9 +29,11 @@ namespace homework
         }
     }
 
+    /// <summary>
+    /// 图的存储与基本算法
+    /// </summary>
     public class Graph
     {
-    /// 图的存储与基本算法
 
         public int count;/// 总结点个数
         public List<List<Edge>> nodeList;///邻接表
@@ -45,14 +52,24 @@ namespace homework
         }
 
 
-        public void add(int s, int t, int w)// 加边
+
+        /// <summary>
+        /// 加边
+        /// </summary>
+        /// <param name="s">起点</param>
+        /// <param name="t">终点</param>
+        /// <param name="w">权值</param>
+        public void add(int s, int t, int w)
         {
             nodeList[s].Add(new Edge(s, t, w));
             //数组下标和实际数量的差别
         }
 
-
-        public List<List<Edge>> getList() /// 获取图的列表
+        /// <summary>
+        /// 获取图的列表
+        /// </summary>
+        /// <returns>邻接表</returns>
+        public List<List<Edge>> getList() 
         {
             return nodeList;
         }
@@ -60,7 +77,13 @@ namespace homework
         //欲实现的算法：BFS，DFS，等代价，深度受限，迭代加深，最佳优先搜索
         //已实现：BFS
 
-        public List<List<Edge>> bfs(int s) /// 建图bfs
+
+        /// <summary>
+        /// 用于绘制一个树状图的bfs
+        /// </summary>
+        /// <param name="s">起点</param>
+        /// <returns></returns>
+        public List<List<Edge>> bfs(int s) 
         {
             List<List<Edge>> res = new List<List<Edge>>();
             que = new Queue<int>();
