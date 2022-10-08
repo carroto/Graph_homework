@@ -84,18 +84,14 @@ namespace homework
                     l.X1 = graph_data[i].x; l.Y1 = graph_data[i].y;
                     l.X2 = graph_data[nodeslist[i][j].t].x; l.Y2 = graph_data[nodeslist[i][j].t].y;
                     Canvas.SetZIndex(l, 0);
-
                     ///////////---------------以下为确定箭头终点-----------------------------------------------------//////////////
-
                     double k = (l.Y2 - l.Y1) / (l.X2 - l.X1);
                     //- -   右半区+下顶点正确
                     //即  l.x1 < l.x2 时结果正确
                     //+ +  左半区+上顶点正确
                     //即  l.x1 > l.x2 时结果正确
-
                     double xm = l.X2;
                     double ym = l.Y2;
-
                     if (l.X1 < l.X2)
                     {
                         xm -= r * Math.Cos(Math.Atan(k));
@@ -106,9 +102,8 @@ namespace homework
                         xm += r * Math.Cos(Math.Atan(k));
                         ym += r * Math.Sin(Math.Atan(k));
                     }
-
                     playground.Children.Add(l);
-                    if (directed == true) Draw.DrawArrow(ref playground, xm, ym, Draw.PI / 6, 10, l);
+                    if (directed == true) Draw.DrawArrow(ref playground, xm, ym, Draw.PI / 6, 12, l);
                 }
             }
         }
