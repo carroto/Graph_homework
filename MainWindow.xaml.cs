@@ -186,11 +186,9 @@ namespace homework
                     l.X2 = graph_data[nodeslist[i][j].t].x; l.Y2 = graph_data[nodeslist[i][j].t].y;
                     Canvas.SetZIndex(l, 0);
 
-                    ///////////--------------------------------------------------------------------//////////////
+                    ///////////---------------以下为确定箭头终点-----------------------------------------------------//////////////
 
-                    Ellipse mark = new Ellipse();
-                    mark.Height = 5; mark.Width = 5;
-
+ 
                     double k = (l.Y2 - l.Y1) / (l.X2 - l.X1);
                     //- -   右半区+下顶点正确
                     //即  l.x1 < l.x2 时结果正确
@@ -210,13 +208,9 @@ namespace homework
                         xm += r * Math.Cos(Math.Atan(k));
                         ym += r * Math.Sin(Math.Atan(k));
                     }
-                    
-                    mark.Fill = Brushes.Red;
-                    Canvas.SetLeft(mark, xm); Canvas.SetTop(mark, ym);
-                    Canvas.SetZIndex(mark, 9);
-                    playground.Children.Add(mark);
-                        
+       
                     playground.Children.Add(l);
+                    Draw.DrawArrow(ref playground, xm, ym, Draw.PI / 6, 10, l);
                 }
             }
         }
