@@ -19,9 +19,14 @@ namespace homework
     /// </summary>
     public partial class Display : Window
     {
+
+
+        
+
         public Display()
         {
             InitializeComponent();
+            
         }
     }
 }
