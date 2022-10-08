@@ -32,7 +32,7 @@ namespace homework
         }
 
 
-        private void Button_Click_1(object sender, RoutedEventArgs e)
+        private void Button_Click_1(object sender, RoutedEventArgs e)//建图函数
         {
             if (count_input.Text == "") MessageBox.Show("请输入节点总数");
             else if (node_input.Text == "") MessageBox.Show("请输入建图节点");
@@ -59,7 +59,6 @@ namespace homework
                     //right:number-space-number-space-number
 
                     string[] temp = s.Split(' ');
-                    //MessageBox.Show("temp.length:" + temp.Length);
                     if(temp.Length != 3 || s == "\r\n")
                     {
                         //前三种错误输入
@@ -83,8 +82,6 @@ namespace homework
                     int b = Convert.ToInt32(temp[1]);
                     int c = Convert.ToInt32(temp[2]);
 
-                    //MessageBox.Show("a=" + a + "b=" + b + "c=" + c);
-
                     if (a > count || b > count)
                     {
                         MessageBox.Show("输入异常：建图节点框输入异常\r\n\r\n正确输入格式应为\r\n \t起点 终点 权值\r\n\t起点 终点 权值\r\n\t...");
@@ -94,28 +91,9 @@ namespace homework
 
                     graph.add(a, b, c);         // 加边
                     if(directed.IsChecked == false) graph.add(b, a, c);
-                    //MessageBox.Show("当前输入节点" + Convert.ToString(a) + " " + Convert.ToString(b));
                 }
 
                 List<List<Edge>> res = graph.getList();
-
-                /// 测试,输出边表///////////////////////////////////////////
-                string ans = "边表：\r\n";
-                for( int i = 0; i < res.Count; i++)
-                {
-                    for(int j = 0; j < res[i].Count; j++)
-                    {                      
-                        if (j != 0)
-                        {                           
-                            ans += "--";
-                        }
-                        ans += (res[i][j].t + 1).ToString();
-                        ans = ans + ("(" + (res[i][j].s + 1).ToString() + ")");
-                    }
-                    ans += "\r\n";
-                }
-                //MessageBox.Show(ans);
-                //////////////////////////////////////////// 
                 Generate_Graph(count);
             }
         }
@@ -142,6 +120,7 @@ namespace homework
             double du = 2 * 3.1415926535 / count;
 
             List<graph_node> graph_data = new List<graph_node>();
+            graph_data.Add(new graph_node());
             
             //画圆
             for(int i = 1; i <= count; i++)
@@ -172,12 +151,10 @@ namespace homework
             List<List<Edge>> nodeslist = graph.getList();
  
             //画直线和箭头
-            for(int i = 0; i < nodeslist.Count; i++)
+            for(int i = 1; i <= nodeslist.Count-1; i++)
             {
-                for (int j = 0; j < nodeslist[i].Count; j++)
+                for (int j = 1; j <= nodeslist[i].Count-1; j++)
                 {
-                    //MessageBox.Show(Convert.ToString(nodeslist[i][j].t + 1));
-                        
                     Line l = new Line(); // 该直线为图中连线
                     l.Stroke = Brushes.Black;
                     l.StrokeThickness = 3; 
