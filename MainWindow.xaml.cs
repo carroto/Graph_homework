@@ -97,7 +97,7 @@ namespace homework
                     //MessageBox.Show("当前输入节点" + Convert.ToString(a) + " " + Convert.ToString(b));
                 }
 
-                List<List<Edge>> res = graph.getList();
+                List<List<Node>> res = graph.getList();
 
                 /// 测试,输出边表///////////////////////////////////////////
                 string ans = "边表：\r\n";
