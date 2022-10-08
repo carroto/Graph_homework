@@ -36,9 +36,10 @@ namespace homework
         {
             this.count = count;
             nodeList = new List<List<Edge>>();
-            for (int i = 0; i < count; i++) // 初始化时给邻接表开辟空间
+            for (int i = 0; i <= count; i++) // 初始化时给邻接表开辟空间
             {
                 nodeList.Add(new List<Edge>());
+                nodeList[i].Add(new Edge(0,0,0));
             }
             return;
         }
@@ -46,7 +47,7 @@ namespace homework
 
         public void add(int s, int t, int w)// 加边
         {
-            nodeList[s - 1].Add(new Edge(s - 1, t - 1, w));
+            nodeList[s].Add(new Edge(s, t, w));
             //数组下标和实际数量的差别
         }
 
