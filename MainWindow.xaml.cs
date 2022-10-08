@@ -38,7 +38,7 @@ namespace homework
             else if (node_input.Text == "") MessageBox.Show("请输入建图节点");
             else
             {
-                
+  
                 int count = int.Parse(count_input.Text); /// 获得当前节点个数
         
                 graph = new Graph(count);               // 初始化图
@@ -214,9 +214,22 @@ namespace homework
                     mark.Fill = Brushes.Red;
                     Canvas.SetLeft(mark, xm); Canvas.SetTop(mark, ym);
                     Canvas.SetZIndex(mark, 9);
+
+
                     playground.Children.Add(mark);
-                        
                     playground.Children.Add(l);
+
+                    ////---------- 以下为绘制箭头两边的部分-------------////
+                    
+                    
+
+
+
+
+
+
+                    ////---------------------------------------------////
+
                 }
             }
         }
