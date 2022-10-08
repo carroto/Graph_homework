@@ -94,24 +94,6 @@ namespace homework
                 }
 
                 List<List<Edge>> res = graph.getList();
-
-                /// 测试,输出边表///////////////////////////////////////////
-                /*string ans = "边表：\r\n";
-                for( int i = 0; i < res.Count; i++)
-                {
-                    for(int j = 0; j < res[i].Count; j++)
-                    {                      
-                        if (j != 0)
-                        {                           
-                            ans += "--";
-                        }
-                        ans += (res[i][j].t + 1).ToString();
-                        ans = ans + ("(" + (res[i][j].s + 1).ToString() + ")");
-                    }
-                    ans += "\r\n";
-                }*/
-                //MessageBox.Show(ans);
-                //////////////////////////////////////////// 
                 Generate_Graph(count);
             }
         }
