@@ -210,7 +210,7 @@ namespace homework
                     }
        
                     playground.Children.Add(l);
-                    Draw.DrawArrow(ref playground, xm, ym, Draw.PI / 6, 10, l);
+                    if(directed.IsChecked == true)Draw.DrawArrow(ref playground, xm, ym, Draw.PI / 6, 10, l);
                 }
             }
         }
