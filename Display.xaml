@@ -22,7 +22,15 @@
             <RowDefinition Height="28*"/>
         </Grid.RowDefinitions>
         <Canvas Grid.Column="1" Grid.Row="1" Grid.ColumnSpan="1" Background="#FFCCBEA5" Opacity="0.7" Margin="0,0,0,7" ClipToBounds="True">
-            <Ellipse Width="100" Height="100" Fill="BlueViolet" Canvas.Top="100" Canvas.Left="-20"></Ellipse>
+            <Canvas PreviewMouseDown="test_MouseDown" PreviewMouseMove="test_MouseMove" PreviewMouseUp="test_MouseUp" PreviewMouseWheel="test_Wheel" Height="301" Width="394" Focusable="True" Background="#FFCCBEA5">
+                <Canvas.RenderTransform>
+                    <TransformGroup/>
+                </Canvas.RenderTransform>
+                <Ellipse Width="100" Height="100" Fill="BlueViolet" Canvas.Top="100" Canvas.Left="-20"  ></Ellipse>
+                <Ellipse Width="63" Height="63" Fill="Chocolate" Canvas.Top="170" Canvas.Left="113" HorizontalAlignment="Center" VerticalAlignment="Top"  ></Ellipse>
+                <Ellipse Width="63" Height="63" Fill="Chocolate" Canvas.Top="62" Canvas.Left="113" HorizontalAlignment="Center" VerticalAlignment="Top"  ></Ellipse>
+            </Canvas>
+
         </Canvas>
         <StackPanel Grid.Row="1" Grid.Column="3" Grid.ColumnSpan="1" Orientation="Horizontal" Margin="0,0,0,4">
             <Border Margin="10" Width="75" BorderBrush="Black" BorderThickness="1">
@@ -39,6 +47,6 @@
             </Border>
         </StackPanel>
         <TextBlock Text="搜索树如下所示：" Grid.Column="1" Margin="10,10,261,10"/>
-        
+
     </Grid>
 </Window>
