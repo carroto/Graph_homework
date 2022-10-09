@@ -5,7 +5,8 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:homework"
         mc:Ignorable="d"
-        Title="Display" Height="414" Width="663">
+        Title="Display" Height="414" Width="663"
+        x:Name="window">
     <Grid>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="20*"/>
@@ -17,9 +18,20 @@
         <Grid.RowDefinitions>
             <RowDefinition Height="40*"/>
             <RowDefinition Height="308*"/>
-            <RowDefinition Height="51*"/>
+            <RowDefinition Height="23*"/>
+            <RowDefinition Height="28*"/>
         </Grid.RowDefinitions>
-        <Canvas Grid.Column="1" Grid.Row="1" Grid.ColumnSpan="1" Background="#FFCCBEA5" Opacity="0.7" Margin="0,0,0,7"/>
+        <Canvas Grid.Column="1" Grid.Row="1" Grid.ColumnSpan="1" Background="#FFCCBEA5" Opacity="0.7" Margin="0,0,0,7" ClipToBounds="True">
+            <Canvas PreviewMouseDown="test_MouseDown" PreviewMouseMove="test_MouseMove" PreviewMouseUp="test_MouseUp" PreviewMouseWheel="test_Wheel" Height="248" Width="357" Focusable="True" Background="#FFCCBEA5" HorizontalAlignment="Left" VerticalAlignment="Top" Canvas.Top="53">
+                <Canvas.RenderTransform>
+                    <TransformGroup/>
+                </Canvas.RenderTransform>
+                <Ellipse Width="100" Height="100" Fill="BlueViolet" Canvas.Top="100" Canvas.Left="-20"  ></Ellipse>
+                <Ellipse Width="63" Height="63" Fill="Chocolate" Canvas.Top="170" Canvas.Left="113" HorizontalAlignment="Center" VerticalAlignment="Top"  ></Ellipse>
+                <Ellipse Width="63" Height="63" Fill="Chocolate" Canvas.Top="62" Canvas.Left="113" HorizontalAlignment="Center" VerticalAlignment="Top"  ></Ellipse>
+            </Canvas>
+
+        </Canvas>
         <StackPanel Grid.Row="1" Grid.Column="3" Grid.ColumnSpan="1" Orientation="Horizontal" Margin="0,0,0,4">
             <Border Margin="10" Width="75" BorderBrush="Black" BorderThickness="1">
                 <StackPanel >
@@ -35,5 +47,6 @@
             </Border>
         </StackPanel>
         <TextBlock Text="搜索树如下所示：" Grid.Column="1" Margin="10,10,261,10"/>
+
     </Grid>
 </Window>

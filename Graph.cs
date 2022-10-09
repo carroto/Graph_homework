@@ -5,28 +5,47 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
+using System.Windows.Controls;
+using System.Windows.Shapes;
 namespace homework
 {
+    /// <summary>
+    /// 邻接表
+    /// </summary>
     public class Edge
     {
         public int s;//source
         public int t;//target
         public int w;//weight
-        public int depth;
-        //depth用于绘图，判定层数
-
         public Edge(int s, int t, int w)
         {
             this.s = s;
             this.t = t;
             this.w = w;
-            this.depth = 0;
         }
     }
-
+    /// <summary>
+    /// 搜索节点信息
+    /// </summary>
+    public class Node
+    {
+        public int id;
+        public int depth;
+        public List<int> child;
+        //可能有多个子节点，故用列表存储
+        public Node(int id,int depth)
+        {
+            this.id = id;
+            this.depth=depth;
+            this.child = new List<int>();
+            this.child.Add(0);//index=0时，填充一个值，保证下标从1开始
+        }
+    }
+    /// <summary>
+    /// 图的存储与基本算法
+    /// </summary>
     public class Graph
     {
-    /// 图的存储与基本算法
 
         public int count;/// 总结点个数
         public List<List<Edge>> nodeList;///邻接表
@@ -38,64 +57,117 @@ namespace homework
             nodeList = new List<List<Edge>>();
             for (int i = 0; i <= count; i++) // 初始化时给邻接表开辟空间
             {
+                //多分配一个空间，日后使用从1开始
                 nodeList.Add(new List<Edge>());
-                nodeList[i].Add(new Edge(0,0,0));
+                nodeList[i].Add(new Edge(0,0,0));//每个新开辟的行填充一个空列表，保证下标从1开始
             }
             return;
         }
 
 
-        public void add(int s, int t, int w)// 加边
+
+        /// <summary>
+        /// 加边
+        /// </summary>
+        /// <param name="s">起点</param>
+        /// <param name="t">终点</param>
+        /// <param name="w">权值</param>
+        public void add(int s, int t, int w)
         {
             nodeList[s].Add(new Edge(s, t, w));
-            //数组下标和实际数量的差别
         }
 
-
-        public List<List<Edge>> getList() /// 获取图的列表
+        /// <summary>
+        /// 获取图的列表
+        /// </summary>
+        /// <returns>邻接表</returns>
+        public List<List<Edge>> getList() 
         {
             return nodeList;
         }
 
         //欲实现的算法：BFS，DFS，等代价，深度受限，迭代加深，最佳优先搜索
         //已实现：BFS
+        //算法通用参数:  起点s，终点t，是否单步执行
+        //算法目标：搜索寻得一条路径，过程中存储搜索路径上的节点信息：序号，深度，子节点列表
+        //同步更新 open表和 closed表的信息，在图中显示
+        //返回值：邻接表res：深度为索引，List<List<Node>>，提示是否能得到一条路径
 
-        public List<List<Edge>> bfs(int s) /// 建图bfs
+        //绘制搜索树时按照深度进行放置节点，按照子节点关系进行绘制
+
+
+
+
+        /// <summary>
+        /// 用于绘制一个树状图的bfs
+        /// </summary>
+        /// <param name="s">起点</param>
+        /// <returns></returns>
+        public List<List<Node>> bfs(int source,int target,bool single) 
         {
-            List<List<Edge>> res = new List<List<Edge>>();
-            que = new Queue<int>();
-            int[] vis = new int[count];
             if (nodeList == null)  // 特判:是否建图出错
             {
                 MessageBox.Show("bfs 失败：当前图为空");
                 return null;
             }
-            que.Enqueue(s); // 将首节点入队
-            vis[s] = 1;
+
+            //List<List<Edge>> res = new List<List<Edge>>();
+            List<List<Node>> res = new List<List<Node>>();
+
             for (int i = 0; i <= count; i++)
             {
-                res.Add(new List<Edge>()); // 
+                //count 个节点。最大深度即为depth = count
+                res.Add(new List<Node>()); // depth=i 的层
+                res[i].Add(new Node(0, 0));
             }
+
+            que = new Queue<int>();
+            int[] vis = new int[count+1];//标记是否访问，记录深度
+            vis[source] = 1;  //vis有值代表访问过，值代表深度
+            que.Enqueue(source); // 将首节点入队，深度标记为1
+            res[vis[source]].Add(new Node(source, vis[source]));
+
+            
+
+
             while (que.Count > 0) 
             {
                 int now = que.First();
-                for (int i = 0; i < nodeList[now].Count; i++)
+                for (int i = 1; i <= nodeList[now].Count-1; i++)
                 {
-                    if (vis[nodeList[now][i].t] == 0)
+                    //对当前节点的子节点的操作：加入指定深度的res中
+                    //对res[vis[now]][res[vis[now]].Count-1]的元素子节点，添加为当前节点的子节点
+
+                    if (vis[nodeList[now][i].t] == 0)//节点未遍历
                     {
-                        que.Enqueue(nodeList[now][i].t);// 将子节点入队列
+                        if (nodeList[now][i].t == target)//找到目标节点，存入res，更新有关信息即可
+                        {
+                            vis[nodeList[now][i].t] = vis[nodeList[now][i].s] + 1; // 子节点深度 (为父深度 + 1)
+                                                                                   
+                            int thisNode_id = nodeList[now][i].t;
+                            int thisNode_dep = vis[thisNode_id];
+                            res[thisNode_dep].Add(new Node(thisNode_id, thisNode_dep));//子节点加入对应的深度中
+                            res[vis[now]][res[vis[now]].Count - 1].child.Add(thisNode_id);//添加子节点的信息
+                            MessageBox.Show("从节点 " + source + " 到节点 " + target + " 的通路找到了！"); 
+                            return res;
+                        }
+                        else//不是目标节点
+                        {
+                            que.Enqueue(nodeList[now][i].t);// 将子节点入队列
 
-                        vis[nodeList[now][i].t] = vis[nodeList[now][i].s] + 1; // 这里vis还表示节点在图中深度 (为父深度 + 1)
-
-                        res[vis[nodeList[now][i].t]].Add(nodeList[now][i]); // 将边的终点添加到对应深度(层次)的返回列表中
+                            vis[nodeList[now][i].t] = vis[nodeList[now][i].s] + 1; // 子节点深度 (为父深度 + 1)
+                                                                                   //now == nodeList[now][i].s
+                            int thisNode_id = nodeList[now][i].t;
+                            int thisNode_dep = vis[thisNode_id];
+                            res[thisNode_dep].Add(new Node(thisNode_id, thisNode_dep));//子节点加入对应的深度中
+                            res[vis[now]][res[vis[now]].Count - 1].child.Add(thisNode_id);//添加子节点的信息
+                        }
                     }
                 }
                 que.Dequeue();// 首节点出队
             }
+            MessageBox.Show("从节点 " + source + " 到节点 " + target + " 不存在通路");
             return res;
         }
-
-        
-
     }
 }
