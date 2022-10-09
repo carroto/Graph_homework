@@ -138,7 +138,7 @@ namespace homework
             {
                 int now = que.First();
                 Open.Dequeue();//open表第一个节点出队，加入closed表中
-                Close.Enqueue(now);
+                
 
                 for (int i = 1; i <= nodeList[now].Count-1; i++)
                 {

@@ -24,6 +24,7 @@ namespace homework
         private bool _isMouseDown = false;
         Point _mouseDownPosition;
         Point _mouseDownControlPosition;
+        Canvas _canvas;
 
         public Display()
         {
@@ -46,12 +47,12 @@ namespace homework
             if (_isMouseDown)
             {
                 var c = sender as Canvas;
+                _canvas = c;
                 var pos = e.GetPosition(this);
                 var dp = pos - _mouseDownPosition;
                 Canvas.SetLeft(c, _mouseDownControlPosition.X + dp.X);
-                Canvas.SetTop(c, _mouseDownControlPosition.Y + dp.Y);
+                Canvas.SetTop(c, _mouseDownControlPosition.Y + dp.Y); 
             }
-
         }
 
         private void test_MouseUp(object sender, MouseButtonEventArgs e)
@@ -64,6 +65,18 @@ namespace homework
         private void test_Wheel(object sender, MouseWheelEventArgs e)
         {
             //MessageBox.Show("wheel up");
+
+            Point currentPoint = e.GetPosition(outside);
+            double s = ((double)e.Delta) / 1000 + 1;
+
+            TransformGroup tg = playground.RenderTransform as TransformGroup;
+            tg.Children.Add(new ScaleTransform(s, s, currentPoint.X, currentPoint.Y));
+        }
+
+        private void Button_Click(object sender, RoutedEventArgs e)
+        {
+            outside.Children.Remove(playground);
+            outside.Children.Add(_canvas);
         }
     }
 }
