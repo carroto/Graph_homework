@@ -22,7 +22,7 @@
             <RowDefinition Height="28*"/>
         </Grid.RowDefinitions>
         <Canvas Grid.Column="1" Grid.Row="1" Grid.ColumnSpan="1" Background="#FFCCBEA5" Opacity="0.7" Margin="0,0,0,7" ClipToBounds="True">
-            <Canvas PreviewMouseDown="test_MouseDown" PreviewMouseMove="test_MouseMove" PreviewMouseUp="test_MouseUp" PreviewMouseWheel="test_Wheel" Height="301" Width="394" Focusable="True" Background="#FFCCBEA5">
+            <Canvas PreviewMouseDown="test_MouseDown" PreviewMouseMove="test_MouseMove" PreviewMouseUp="test_MouseUp" PreviewMouseWheel="test_Wheel" Height="248" Width="357" Focusable="True" Background="#FFCCBEA5" HorizontalAlignment="Left" VerticalAlignment="Top" Canvas.Top="53">
                 <Canvas.RenderTransform>
                     <TransformGroup/>
                 </Canvas.RenderTransform>

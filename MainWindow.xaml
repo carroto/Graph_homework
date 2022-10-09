@@ -43,7 +43,7 @@
         </Canvas>
         <StackPanel Grid.Column="5" Grid.Row="1" Grid.RowSpan="1" Grid.ColumnSpan="1"  Width="128">
             <TextBlock Height="287" />
-            <Button Content="设置" Margin="5" Height="42"  />
+            <Button Content="测试算法1-4" Margin="5" Height="42" Click="Button_Click_2"  />
         </StackPanel>
     </Grid>
 </Window>

@@ -52,7 +52,7 @@ namespace homework
 
                     //posiible illegal input:
                     //number
-                    //number-space
+                    //number-space:2
                     //number-space-number:2
                     //number-space-number-space:3
 
@@ -61,19 +61,19 @@ namespace homework
                     string[] temp = s.Split(' ');
                     if((temp.Length != 3 && temp.Length != 2) || s == "\r\n")
                     {
-                        //前三种错误输入
-                        MessageBox.Show("Input error!\r\n Do not end with 'Enter'\r\nInput include origin destination weight");
+                        //第一种错误输入，特殊错误输入
+                        MessageBox.Show("Input error!\r\n Do not end with 'Enter'\r\nInput include origin destination （weight）");
                         break;
                         return;
                     }
                     int a = 0; int b = 0; int c = 0;
                     if (temp.Length == 3)
                     {
-                        //针对第四种输入情形的特判
+                        //针对第四种输入情形的特判，输入错误
                         int last = s.LastIndexOf(' ');
                         if(last == s.Length - 1)
                         {
-                            MessageBox.Show("input error");
+                            MessageBox.Show("Input error!\r\n Do not end with 'Enter'\r\nInput include origin destination （weight）");
                             break;
                             return;
                         }
@@ -84,11 +84,13 @@ namespace homework
 
                     if (temp.Length == 2)
                     {
-                        //针对第四种输入情形的特判
+                        //针对第二、三种输入情形的特判
+                        //三 没有权重输入，可以生成
+                        //二 输入错误，应当检查
                         int last = s.LastIndexOf(' ');
                         if (last == s.Length - 1)
                         {
-                            MessageBox.Show("input error");
+                            MessageBox.Show("Input error!\r\n Do not end with 'Enter'\r\nInput include origin destination （weight）");
                             break;
                             return;
                         }
@@ -100,7 +102,7 @@ namespace homework
 
                     if (a > count || b > count)
                     {
-                        MessageBox.Show("输入异常：建图节点框输入异常\r\n\r\n正确输入格式应为\r\n \t起点 终点 权值\r\n\t起点 终点 权值\r\n\t...");
+                        MessageBox.Show("Input error!\r\n Do not end with 'Enter'\r\nInput include origin destination （weight）");
                         break;
                         return;
                     }
@@ -119,10 +121,17 @@ namespace homework
 
         
         
-        private void Button_Click(object sender, RoutedEventArgs e)
+        private void Button_Click(object sender, RoutedEventArgs e)//新界面进行树的相关操作
         {
             var t = new Display();
             t.ShowDialog();
+        }
+
+        private void Button_Click_2(object sender, RoutedEventArgs e)
+        {
+            int source = 1;
+            int target = 4;
+            graph.bfs(source, target, true);
         }
     }
 

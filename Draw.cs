@@ -167,21 +167,5 @@ namespace homework
             playground.Children.Add(l2);
 
         }
-
-        /// <summary>
-        /// 测试箭头顶点位置函数
-        /// </summary>
-        /// <param name="playground">目标画布的引用</param>
-        /// <param name="hx">顶点横坐标/param>
-        /// <param name="hy">顶点纵坐标</param>
-        private static void testTarget(ref Canvas playground, double hx, double hy)
-        {
-            Ellipse mark = new Ellipse();
-            mark.Height = 5; mark.Width = 5;
-            mark.Fill = Brushes.Red;
-            Canvas.SetLeft(mark, hx); Canvas.SetTop(mark, hy);
-            Canvas.SetZIndex(mark, 9);
-            playground.Children.Add(mark);
-        }
     }
 }
