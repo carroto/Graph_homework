@@ -49,7 +49,7 @@ namespace homework
                 var pos = e.GetPosition(this);
                 var dp = pos - _mouseDownPosition;
                 Canvas.SetLeft(c, _mouseDownControlPosition.X + dp.X);
-                Canvas.SetTop(c, _mouseDownControlPosition.Y + dp.Y);
+                Canvas.SetTop(c, _mouseDownControlPosition.Y + dp.Y); 
             }
 
         }
