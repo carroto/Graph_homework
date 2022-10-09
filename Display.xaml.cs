@@ -64,6 +64,13 @@ namespace homework
         private void test_Wheel(object sender, MouseWheelEventArgs e)
         {
             //MessageBox.Show("wheel up");
+
+            Point currentPoint = e.GetPosition(outside);
+
+            double s = ((double)e.Delta) / 1000 + 1;
+
+            TransformGroup tg = playground.RenderTransform as TransformGroup;
+            tg.Children.Add(new ScaleTransform(s, s, currentPoint.X, currentPoint.Y));
         }
     }
 }
