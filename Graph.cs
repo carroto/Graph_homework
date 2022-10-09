@@ -103,20 +103,23 @@ namespace homework
         /// <summary>
         /// 用于绘制一个树状图的bfs
         /// </summary>
-        /// <param name="s">起点</param>
+        /// <param name="source">起点</param>
+        /// <param name="target">终点</param>
+        /// <param name="single">是否单步执行</param>
         /// <returns></returns>
         public List<List<Node>> bfs(int source,int target,bool single) 
         {
             if (nodeList == null)  // 特判:是否建图出错
             {
-                MessageBox.Show("bfs 失败：当前图为空");
+                MessageBox.Show("BFS 失败：当前图为空");
                 return null;
             }
 
-            //List<List<Edge>> res = new List<List<Edge>>();
             List<List<Node>> res = new List<List<Node>>();
             Open = new Queue<int>();
-
+            Close = new Queue<int>();
+            que = new Queue<int>();
+            int[] vis = new int[count + 1];//标记是否访问，记录深度
 
             for (int i = 0; i <= count; i++)
             {
@@ -125,15 +128,10 @@ namespace homework
                 res[i].Add(new Node(0, 0));
             }
 
-            que = new Queue<int>();
-            int[] vis = new int[count+1];//标记是否访问，记录深度
-            vis[source] = 1;  //vis有值代表访问过，值代表深度
             que.Enqueue(source); // 将首节点入队，深度标记为1
+            Open.Enqueue(source);
+            vis[source] = 1;  //vis有值代表访问过，值代表深度
             res[vis[source]].Add(new Node(source, vis[source]));
-
-            Open.Enqueue(target);//open表加入节点
-
-            
 
 
             while (que.Count > 0) 
@@ -151,7 +149,7 @@ namespace homework
 
                     if (vis[nodeList[now][i].t] == 0)//节点未遍历,亦即不在closed表中
                     {
-                        Open.Enqueue(nodeList[now][i].t);//加入open表中
+                        Open.Enqueue(nodeList[now][i].t);//加入open表中,不管是不是目标节点
                         //Open.Enqueue(thisNode_id);
 
                         if (nodeList[now][i].t == target)//找到目标节点，存入res，更新有关信息即可
@@ -160,6 +158,7 @@ namespace homework
                                                                                    
                             int thisNode_id = nodeList[now][i].t;
                             int thisNode_dep = vis[thisNode_id];
+                            que.Enqueue(thisNode_id);
 
                             res[thisNode_dep].Add(new Node(thisNode_id, thisNode_dep));//子节点加入对应的深度中
                             res[vis[now]][res[vis[now]].Count - 1].child.Add(thisNode_id);//添加子节点的信息
@@ -168,12 +167,11 @@ namespace homework
                         }
                         else//不是目标节点
                         {
-                            que.Enqueue(nodeList[now][i].t);// 将子节点入队列
-
                             vis[nodeList[now][i].t] = vis[nodeList[now][i].s] + 1; // 子节点深度 (为父深度 + 1)
                                                                                    //now == nodeList[now][i].s
                             int thisNode_id = nodeList[now][i].t;
                             int thisNode_dep = vis[thisNode_id];
+                            que.Enqueue(thisNode_id);
 
                             res[thisNode_dep].Add(new Node(thisNode_id, thisNode_dep));//子节点加入对应的深度中
                             res[vis[now]][res[vis[now]].Count - 1].child.Add(thisNode_id);//添加子节点的信息
@@ -184,6 +182,36 @@ namespace homework
             }
             MessageBox.Show("从节点 " + source + " 到节点 " + target + " 不存在通路");
             return res;
+        }
+        public List<List<Node>> dfs(int source,int target,bool single)
+        {
+            if (nodeList == null)  // 特判:是否建图出错
+            {
+                MessageBox.Show("DFS 失败：当前图为空");
+                return null;
+            }
+
+            List<List<Node>> res = new List<List<Node>>();
+            return res;
+            Open = new Queue<int>();
+            Close = new Queue<int>();
+            int[] vis = new int[count+1];
+
+            for (int i = 0; i <= count; i++)
+            {
+                //count 个节点。最大深度即为depth = count
+                res.Add(new List<Node>()); // depth=i 的层
+                res[i].Add(new Node(0, 0));
+            }
+            vis[source] = 1;
+            Open.Enqueue(source);
+            res[vis[source]].Add(new Node(source, vis[source]));
+
+            for (int i = 1; i <= count; i++)
+            {
+              
+            }
+
         }
     }
 }
