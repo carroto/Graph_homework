@@ -50,6 +50,8 @@ namespace homework
         public int count;/// 总结点个数
         public List<List<Edge>> nodeList;///邻接表
         Queue<int> que;// 
+        Queue<int> Open;
+        Queue<int> Close;//方便起见，统一用队列
 
         public Graph(int count)
         {
@@ -113,6 +115,8 @@ namespace homework
 
             //List<List<Edge>> res = new List<List<Edge>>();
             List<List<Node>> res = new List<List<Node>>();
+            Open = new Queue<int>();
+
 
             for (int i = 0; i <= count; i++)
             {
@@ -127,25 +131,36 @@ namespace homework
             que.Enqueue(source); // 将首节点入队，深度标记为1
             res[vis[source]].Add(new Node(source, vis[source]));
 
+            Open.Enqueue(target);//open表加入节点
+
             
 
 
             while (que.Count > 0) 
             {
                 int now = que.First();
+                Open.Dequeue();//open表第一个节点出队，加入closed表中
+                Close.Enqueue(now);
+
                 for (int i = 1; i <= nodeList[now].Count-1; i++)
                 {
                     //对当前节点的子节点的操作：加入指定深度的res中
                     //对res[vis[now]][res[vis[now]].Count-1]的元素子节点，添加为当前节点的子节点
+                    //将子节点加入open表中
 
-                    if (vis[nodeList[now][i].t] == 0)//节点未遍历
+
+                    if (vis[nodeList[now][i].t] == 0)//节点未遍历,亦即不在closed表中
                     {
+                        Open.Enqueue(nodeList[now][i].t);//加入open表中
+                        //Open.Enqueue(thisNode_id);
+
                         if (nodeList[now][i].t == target)//找到目标节点，存入res，更新有关信息即可
                         {
                             vis[nodeList[now][i].t] = vis[nodeList[now][i].s] + 1; // 子节点深度 (为父深度 + 1)
                                                                                    
                             int thisNode_id = nodeList[now][i].t;
                             int thisNode_dep = vis[thisNode_id];
+
                             res[thisNode_dep].Add(new Node(thisNode_id, thisNode_dep));//子节点加入对应的深度中
                             res[vis[now]][res[vis[now]].Count - 1].child.Add(thisNode_id);//添加子节点的信息
                             MessageBox.Show("从节点 " + source + " 到节点 " + target + " 的通路找到了！"); 
@@ -159,6 +174,7 @@ namespace homework
                                                                                    //now == nodeList[now][i].s
                             int thisNode_id = nodeList[now][i].t;
                             int thisNode_dep = vis[thisNode_id];
+
                             res[thisNode_dep].Add(new Node(thisNode_id, thisNode_dep));//子节点加入对应的深度中
                             res[vis[now]][res[vis[now]].Count - 1].child.Add(thisNode_id);//添加子节点的信息
                         }
