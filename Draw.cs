@@ -7,8 +7,7 @@ using System.Windows.Controls;
 using System.Windows.Shapes;
 using System.Windows;
 using System.Windows.Media;
-
-
+using System.Threading;
 
 namespace homework
 {
@@ -57,7 +56,7 @@ namespace homework
                 l.FontSize = 20;
                 double y = y0 - Math.Cos(du * i) * R;
                 double x = x0 + Math.Sin(du * i) * R;
-                //此处x,y并非圆心，画图可知为⚪的交点
+
                 //MessageBox.Show("创建位置：" + Convert.ToString(x - r) + " " + Convert.ToString(y - r));
                 Canvas.SetLeft(e, x - r / 2); Canvas.SetTop(e, y - r / 2);
                 Canvas.SetLeft(l, x); Canvas.SetTop(l, y);
@@ -102,6 +101,7 @@ namespace homework
                         xm += r * Math.Cos(Math.Atan(k));
                         ym += r * Math.Sin(Math.Atan(k));
                     }
+
                     playground.Children.Add(l);
                     if (directed == true) Draw.DrawArrow(ref playground, xm, ym, Draw.PI / 6, 12, l);
                 }
@@ -112,17 +112,6 @@ namespace homework
         /// 圆周率
         /// </summary>
         public static double PI = 3.1415926535;
-
-        /// <summary>
-        /// 存放箭头两边终点坐标的类型
-        /// </summary>
-        private struct ArrowPoints
-        {
-            public double X1;
-            public double Y1;
-            public double X2;
-            public double Y2;
-        }
 
         /// <summary>
         /// 为直线绘制箭头的函数，直接将目标画布的引用传入完成绘制
@@ -166,6 +155,119 @@ namespace homework
             playground.Children.Add(l1);
             playground.Children.Add(l2);
 
+        }
+        
+        /// <summary>
+        /// 绘制搜索树
+        /// </summary>
+        /// <param name="playground">目标画布的引用</param>
+        /// <param name="graph">图</param>
+        /// <param name="data">搜索节点信息表</param>
+        /// <param name="count">节点数目</param>
+        public static void Generate_tree(ref Canvas playground,Graph graph,List<List<Node>> data,int count)
+        {
+            playground.Children.Clear();
+
+            double x0 = 30; double y0 = 200; double r = 25;
+            double x_gap = 125; double y_gap = 80;//横向和竖向的偏移量
+
+            //switch?
+            //List<List<Node>> res = graph.bfs(1, 3, true);
+            //由生成的数组进行生成搜索树
+
+            //画圆，更新坐标信息
+           for(int i=1; i <= data.Count-1; i++)
+            {//对深度进行遍历
+             //当前深度下的所有节点进行绘制
+             //一个深度对应一个横坐标
+             //当前深度下的节点个数不同对应不同的纵坐标
+
+                int num = data[i].Count - 1;//该深度层的节点个数
+                double x = x0 + (i - 1) * x_gap;
+                double y = y0;
+                double y_top = y0 - (num / 2) * y_gap;
+
+                //画圆
+                for (int j=1; j<= data[i].Count-1; j++)
+                {
+                    //从上往下依次排开
+                    y = y_top + (j - 1) * y_gap;
+                    //记录节点的坐标
+                    data[i][j].x = x;
+                    data[i][j].y = y;
+
+                    Ellipse e = new Ellipse();
+                    TextBlock l = new TextBlock();
+                    l.Text = Convert.ToString(data[i][j].id);
+                    l.FontSize = 20;
+
+                    Canvas.SetLeft(e, x - r); Canvas.SetTop(e, y - r);
+                    Canvas.SetLeft(l, x - r/2); Canvas.SetTop(l, y - r/2);
+                    Canvas.SetZIndex(e, 1);
+                    Canvas.SetZIndex(l, 1);
+
+                    e.Width = e.Height = 2 * r;
+                    e.Fill = new SolidColorBrush(Color.FromRgb(108, 165, 178));
+                    playground.Children.Add(e);
+                    playground.Children.Add(l);
+                }
+            }
+            
+           //画直线和箭头
+            for (int i = 1; i <= data.Count-1; i++)
+            {// i 按深度遍历
+                for(int j = 1; j <=data[i].Count-1; j++)
+                {
+                    //j 遍历该深度下的节点
+                    for(int k = 1; k <= data[i][j].child.Count-1; k++)
+                    {
+                        //对每个节点及其子节点进行绘制直线和箭头
+                        //k 遍历  当前子节点.child 中的节点
+                        Line l = new Line(); // 该直线为图中连线
+                        l.Stroke = Brushes.Black;
+                        l.StrokeThickness = 3;
+
+                        //指定起点和终点的坐标
+                        l.X1 = data[i][j].x; l.Y1 = data[i][j].y;
+                        //终点：data[i+1]中的某一个，只知序号不知下标，无法索引
+                        //终点，须在data[i+1]中按照值寻找，返回下标
+                        int index = 0;
+                        for (int t = 1; t <= data[i+1].Count-1; t++)
+                        {
+                            if (data[i + 1][t].id == data[i][j].child[k])
+                            {
+                                index = t;
+                                //在i+1深度中找到了data[i][j]的子节点，其在data[i+1]中的下标为index
+                                //故终点为data[i+1][index]
+                                break;
+                            }
+                        }
+                        l.X2 = data[i + 1][index].x; l.Y2 = data[i + 1][index].y;
+                        Canvas.SetZIndex(l, 0);
+                        ///////////---------------以下为确定箭头终点-----------------------------------------------------//////////////
+                        double K = (l.Y2 - l.Y1) / (l.X2 - l.X1);
+                        //- -   右半区+下顶点正确
+                        //即  l.x1 < l.x2 时结果正确
+                        //+ +  左半区+上顶点正确
+                        //即  l.x1 > l.x2 时结果正确
+                        double xm = l.X2;
+                        double ym = l.Y2;
+                        if (l.X1 < l.X2)
+                        {
+                            xm -= r * Math.Cos(Math.Atan(K));
+                            ym -= r * Math.Sin(Math.Atan(K));
+                        }
+                        else
+                        {
+                            xm += r * Math.Cos(Math.Atan(K));
+                            ym += r * Math.Sin(Math.Atan(K));
+                        }
+                        playground.Children.Add(l);
+                        Draw.DrawArrow(ref playground, xm, ym, Draw.PI / 6, 12, l);
+                    }
+                }
+            }
+            MessageBox.Show(" ");
         }
     }
 }

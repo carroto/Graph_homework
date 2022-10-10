@@ -31,6 +31,8 @@ namespace homework
     {
         public int id;
         public int depth;
+        public double x;//坐标
+        public double y;
         public List<int> child;
         //可能有多个子节点，故用列表存储
         public Node(int id,int depth)
@@ -41,6 +43,7 @@ namespace homework
             this.child.Add(0);//index=0时，填充一个值，保证下标从1开始
         }
     }
+
     /// <summary>
     /// 图的存储与基本算法
     /// </summary>
@@ -52,6 +55,7 @@ namespace homework
         Queue<int> que;// 
         Queue<int> Open;
         Queue<int> Close;//方便起见，统一用队列
+        public static Graph temp;
 
         public Graph(int count)
         {
@@ -138,7 +142,7 @@ namespace homework
             {
                 int now = que.First();
                 Open.Dequeue();//open表第一个节点出队，加入closed表中
-                Close.Enqueue(now);
+                
 
                 for (int i = 1; i <= nodeList[now].Count-1; i++)
                 {
@@ -209,7 +213,7 @@ namespace homework
 
             for (int i = 1; i <= count; i++)
             {
-              
+                //dfstravel();
             }
 
         }
