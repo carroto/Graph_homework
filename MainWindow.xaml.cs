@@ -115,10 +115,7 @@ namespace homework
 
                 Draw.Generate_Graph(ref playground, graph, ((directed.IsChecked == true) ? true : false), count);// 绘制图形
 
-                //List<List<Node>> tree = graph.bfs(1,8,true);
-                //Graph.temp = graph;
-                //Draw.Generate_tree(ref playground, graph, tree, count);
-                //MessageBox.Show("end");
+                Graph.temp = graph;
             }
         }
 

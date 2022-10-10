@@ -267,7 +267,6 @@ namespace homework
                     }
                 }
             }
-            MessageBox.Show(" ");
         }
     }
 }
