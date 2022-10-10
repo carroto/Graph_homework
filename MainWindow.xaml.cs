@@ -133,6 +133,7 @@ namespace homework
             }
             var t = new Display();
             t.ShowDialog();
+            
         }
     }
 
