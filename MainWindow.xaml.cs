@@ -24,7 +24,7 @@ namespace homework
     public partial class MainWindow : Window
     {
         Graph graph;
-
+        
         
         public MainWindow()
         {
@@ -114,6 +114,11 @@ namespace homework
                 List<List<Edge>> res = graph.getList(); // 取建图邻接表
 
                 Draw.Generate_Graph(ref playground, graph, ((directed.IsChecked == true) ? true : false), count);// 绘制图形
+
+                //List<List<Node>> tree = graph.bfs(1,8,true);
+                //Graph.temp = graph;
+                //Draw.Generate_tree(ref playground, graph, tree, count);
+                //MessageBox.Show("end");
             }
         }
 

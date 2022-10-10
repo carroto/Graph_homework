@@ -78,5 +78,16 @@ namespace homework
             outside.Children.Remove(playground);
             outside.Children.Add(_canvas);
         }
+
+        private void Button_Click_1(object sender, RoutedEventArgs e)
+        {
+            List<List<Node>> tree = Graph.temp.bfs(1, 8, true);
+            Draw.Generate_tree(ref playground, Graph.temp, tree, Graph.temp.count);
+        }
+
+        private void Button_Click_2(object sender, RoutedEventArgs e)
+        {
+
+        }
     }
 }
