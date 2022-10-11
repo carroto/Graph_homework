@@ -124,7 +124,7 @@ namespace homework
         {
             if(count_input.Text == "")
             {
-                MessageBox.Show("请先建立图！");
+                MessageBox.Show("请先建立图！");//待修复
                 return;
             }
             var t = new Display();
