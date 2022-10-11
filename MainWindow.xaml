@@ -23,9 +23,10 @@
         </Grid.ColumnDefinitions>
         <StackPanel Grid.Row="0" Grid.Column="1" Grid.RowSpan="3" Grid.ColumnSpan="1" Margin="0,0,7,0">
             <TextBlock Height="13"></TextBlock>
-            <TextBlock Text="总结点个数：" Margin="5 5 5 5" Height="18" Width="118"></TextBlock>
+            <TextBlock Text="总结点个数：" Margin="5 5 5 5" Height="18" Width="118" FontSize="15"></TextBlock>
             <TextBox x:Name="count_input" Margin="15 0 10 20" Height="30" FontSize="16"></TextBox>
-            <TextBlock Text="建图节点框" Margin="5 5 5 5" Height="18" Width="118"></TextBlock>
+            <TextBlock Text="建图节点框" Margin="1 5 5 1" Height="18" Width="118" FontSize="15"></TextBlock>
+            <TextBlock Text="              *起点-终点-权重(可选)*" FontSize="9" Margin="2 1 2 5"></TextBlock>
             <TextBox x:Name="node_input" Margin="15 0 10 20" Height="138" FontSize="16" AcceptsReturn="True" ></TextBox>
             <CheckBox x:Name="directed" Content="是否为有向图" Margin="15 0 0 0" IsChecked="False"></CheckBox>
             <Button Content="建图" Margin="15" Height="39" Click="Button_Click_1"></Button>

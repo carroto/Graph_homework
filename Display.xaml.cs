@@ -73,21 +73,59 @@ namespace homework
             tg.Children.Add(new ScaleTransform(s, s, currentPoint.X, currentPoint.Y));
         }
 
-        private void Button_Click(object sender, RoutedEventArgs e)
+        private void Button_Click(object sender, RoutedEventArgs e)//复位 -- 按钮
         {
             outside.Children.Remove(playground);
             outside.Children.Add(_canvas);
         }
 
-        private void Button_Click_1(object sender, RoutedEventArgs e)
+        private void Button_Click_1(object sender, RoutedEventArgs e)//执行算法 -- 按钮
         {
-            List<List<Node>> tree = Graph.temp.bfs(1, 8, true);
-            Draw.Generate_tree(ref playground, Graph.temp, tree, Graph.temp.count);
+            string choice = Algorithm.Text;
+            //获取combobox中的当前值，进行分支判断
+
+            if(Source_Node.Text == "" || Target_Node.Text == "")
+            {//未输入信息的情况
+                MessageBox.Show("输入信息不全");
+                return;
+            }
+
+            int start = Convert.ToInt32(Source_Node.Text);
+            int target = Convert.ToInt32(Target_Node.Text);
+
+            int num_node = Graph.temp.count;//节点数目
+            if(start > num_node || target > num_node || start < 1 || target < 1)
+            {
+                MessageBox.Show("节点输入范围错误.");
+                return;
+            }
+            switch (choice){
+                case "请选择算法":
+                    MessageBox.Show("未选择算法！请重新选择！");
+                    break;
+                case "广度优先搜索":
+                    List<List<Node>> tree_bfs = Graph.temp.Breadth_first_search(start, target);
+                    Draw.Generate_tree(ref playground, Graph.temp, tree_bfs, Graph.temp.count);
+                    break;
+                case "深度优先搜索":
+                    List<List<Node>> tree_dfs = Graph.temp.Deep_first_search(start,target);
+                    Draw.Generate_tree(ref playground,Graph.temp, tree_dfs, Graph.temp.count);
+                    break;
+                case "深度受限搜索":
+                    break;
+                case "迭代加深搜索":
+                    break;
+                case "等代价搜索":
+                    break;
+                case "最佳优先搜索":
+                    break;
+            }
+
         }
 
-        private void Button_Click_2(object sender, RoutedEventArgs e)
+        private void Button_Click_2(object sender, RoutedEventArgs e)//单步执行 -- 按钮
         {
-
+            
         }
     }
 }
