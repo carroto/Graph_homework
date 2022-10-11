@@ -1,4 +1,5 @@
-﻿using System;
+﻿using homework;
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
@@ -6,6 +7,8 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
+using System.Windows.Media;
+using System.Windows.Navigation;
 using System.Windows.Shapes;
 namespace homework
 {
@@ -52,7 +55,8 @@ namespace homework
 
         public int count;/// 总结点个数
         public List<List<Edge>> nodeList;///邻接表
-        Queue<int> que;// 
+        Queue<int> que;//bfs用的队列
+
         Queue<int> Open;
         Queue<int> Close;//方便起见，统一用队列
         public static Graph temp;
@@ -69,8 +73,6 @@ namespace homework
             }
             return;
         }
-
-
 
         /// <summary>
         /// 加边
@@ -102,18 +104,17 @@ namespace homework
         //绘制搜索树时按照深度进行放置节点，按照子节点关系进行绘制
 
 
-
-
+        
+        
         /// <summary>
         /// 用于绘制一个树状图的bfs
         /// </summary>
         /// <param name="source">起点</param>
         /// <param name="target">终点</param>
-        /// <param name="single">是否单步执行</param>
         /// <returns></returns>
-        public List<List<Node>> bfs(int source,int target,bool single) 
+        public List<List<Node>> Breadth_first_search(int source,int target)
         {
-            if (nodeList == null)  // 特判:是否建图出错
+           if (nodeList == null)  // 特判:是否建图出错
             {
                 MessageBox.Show("BFS 失败：当前图为空");
                 return null;
@@ -138,13 +139,13 @@ namespace homework
             res[vis[source]].Add(new Node(source, vis[source]));
 
 
-            while (que.Count > 0) 
+            while (que.Count > 0)
             {
                 int now = que.First();
                 Open.Dequeue();//open表第一个节点出队，加入closed表中
-                
 
-                for (int i = 1; i <= nodeList[now].Count-1; i++)
+
+                for (int i = 1; i <= nodeList[now].Count - 1; i++)
                 {
                     //对当前节点的子节点的操作：加入指定深度的res中
                     //对res[vis[now]][res[vis[now]].Count-1]的元素子节点，添加为当前节点的子节点
@@ -154,19 +155,19 @@ namespace homework
                     if (vis[nodeList[now][i].t] == 0)//节点未遍历,亦即不在closed表中
                     {
                         Open.Enqueue(nodeList[now][i].t);//加入open表中,不管是不是目标节点
-                        //Open.Enqueue(thisNode_id);
+                                                         //Open.Enqueue(thisNode_id);
 
                         if (nodeList[now][i].t == target)//找到目标节点，存入res，更新有关信息即可
                         {
                             vis[nodeList[now][i].t] = vis[nodeList[now][i].s] + 1; // 子节点深度 (为父深度 + 1)
-                                                                                   
+
                             int thisNode_id = nodeList[now][i].t;
                             int thisNode_dep = vis[thisNode_id];
                             que.Enqueue(thisNode_id);
 
                             res[thisNode_dep].Add(new Node(thisNode_id, thisNode_dep));//子节点加入对应的深度中
                             res[vis[now]][res[vis[now]].Count - 1].child.Add(thisNode_id);//添加子节点的信息
-                            MessageBox.Show("从节点 " + source + " 到节点 " + target + " 的通路找到了！"); 
+                            MessageBox.Show("从节点 " + source + " 到节点 " + target + " 的通路找到了！");
                             return res;
                         }
                         else//不是目标节点
@@ -186,8 +187,9 @@ namespace homework
             }
             MessageBox.Show("从节点 " + source + " 到节点 " + target + " 不存在通路");
             return res;
+
         }
-        public List<List<Node>> dfs(int source,int target,bool single)
+        public List<List<Node>> Deep_first_search(int source, int target)
         {
             if (nodeList == null)  // 特判:是否建图出错
             {
@@ -197,9 +199,11 @@ namespace homework
 
             List<List<Node>> res = new List<List<Node>>();
             return res;
+
+
             Open = new Queue<int>();
             Close = new Queue<int>();
-            int[] vis = new int[count+1];
+            int[] vis = new int[count + 1];
 
             for (int i = 0; i <= count; i++)
             {
@@ -217,5 +221,26 @@ namespace homework
             }
 
         }
+        public List<List<Node>> Depth_limit_search(int source, int target)
+        {
+            List<List<Node>> res = new List<List<Node>>();
+            return res;
+        }
+        public List<List<Node>> Uniform_cost_research(int source, int target)
+        {
+            List<List<Node>> res = new List<List<Node>>();
+            return res;
+        }
+        public List<List<Node>> Iterative_deepening_search(int source, int target)
+        {
+            List<List<Node>> res = new List<List<Node>>();
+            return res;
+        }
+        public List<List<Node>> Best_first_search(int source, int target)
+        {
+            List<List<Node>> res = new List<List<Node>>();
+            return res;
+        }
+
     }
 }

@@ -24,15 +24,14 @@ namespace homework
     public partial class MainWindow : Window
     {
         Graph graph;
-        
-        
+                
         public MainWindow()
         {
             InitializeComponent();
         }
 
 
-        private void Button_Click_1(object sender, RoutedEventArgs e)//建图函数
+        private void Button_Click_1(object sender, RoutedEventArgs e)//建图
         {
             if (count_input.Text == "") MessageBox.Show("请输入节点总数");
             else if (node_input.Text == "") MessageBox.Show("请输入建图节点");
@@ -120,20 +119,16 @@ namespace homework
         }
 
         
-
         
-        
-        private void Button_Click(object sender, RoutedEventArgs e)//新界面进行树的相关操作
+        private void Button_Click(object sender, RoutedEventArgs e)//算法研究
         {
+            if(count_input.Text == "")
+            {
+                MessageBox.Show("请先建立图！");
+                return;
+            }
             var t = new Display();
             t.ShowDialog();
-        }
-
-        private void Button_Click_2(object sender, RoutedEventArgs e)
-        {
-            int source = 1;
-            int target = 4;
-            graph.bfs(source, target, true);
         }
     }
 
