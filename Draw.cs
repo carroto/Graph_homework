@@ -43,7 +43,9 @@ namespace homework
         {
             playground.Children.Clear();
             double R = 150; double x0 = 283; double y0 = 194; double r = 25;
+
             double du = 2 * 3.1415926535 / count;
+
             List<graph_node> graph_data = new List<graph_node>();
             graph_data.Add(new graph_node());
 
@@ -54,6 +56,7 @@ namespace homework
                 TextBlock l = new TextBlock();
                 l.Text = Convert.ToString(i);
                 l.FontSize = 20;
+
                 double y = y0 - Math.Cos(du * i) * R;
                 double x = x0 + Math.Sin(du * i) * R;
 
@@ -62,6 +65,7 @@ namespace homework
                 Canvas.SetLeft(l, x); Canvas.SetTop(l, y);
                 Canvas.SetZIndex(e, 1);
                 Canvas.SetZIndex(l, 1);
+
                 graph_data.Add(new graph_node(i, x + r / 2, y + r / 2));
                 e.Width = e.Height = 2 * r;
                 e.Fill = new SolidColorBrush(Color.FromRgb(108, 165, 178));
@@ -127,7 +131,7 @@ namespace homework
         {
             Line l1 = new Line();
             Line l2 = new Line();
-            //testTarget(ref playground, hx, hy); // 测试箭头顶点位置是否正确
+
             l1.X1 = hx; l1.Y1 = hy; l2.X1 = hx; l2.Y1 = hy;
             double Xa = 0; double Ya = 0; double Xb = 0; double Yb = 0;
             double k = (L.Y1 - L.Y2) / (L.X1 - L.X2); // 直线的斜率
@@ -170,10 +174,6 @@ namespace homework
 
             double x0 = 30; double y0 = 200; double r = 25;
             double x_gap = 125; double y_gap = 80;//横向和竖向的偏移量
-
-            //switch?
-            //List<List<Node>> res = graph.bfs(1, 3, true);
-            //由生成的数组进行生成搜索树
 
             //画圆，更新坐标信息
             for (int i = 1; i <= data.Count - 1; i++)

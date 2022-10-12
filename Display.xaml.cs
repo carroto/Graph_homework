@@ -102,6 +102,7 @@ namespace homework
             int target = Convert.ToInt32(Target_Node.Text);
 
             int num_node = Graph.temp.count;//节点数目
+
             if(start > num_node || target > num_node || start < 1 || target < 1)
             {
                 MessageBox.Show("节点输入范围错误.");
@@ -118,7 +119,6 @@ namespace homework
                 case "深度优先搜索":
                     List<List<Node>> tree_dfs = Graph.temp.Deep_first_search(start,target);
                     Draw.Generate_tree(ref playground,Graph.temp, tree_dfs, Graph.temp.count);
-                    MessageBox.Show("666");
                     break;
                 case "深度受限搜索":
                     break;

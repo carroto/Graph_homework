@@ -107,6 +107,7 @@ namespace homework
                         return;
                     }
 
+
                     graph.add(a, b, c);         // 加边
                     if(directed.IsChecked == false) graph.add(b, a, c);
                 }

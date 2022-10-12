@@ -67,6 +67,7 @@ namespace homework
         public Graph(int count)
         {
             this.count = count;
+
             nodeList = new List<List<Edge>>();
             isbuild = false;
             for (int i = 0; i <= count; i++) // 初始化时给邻接表开辟空间
