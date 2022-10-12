@@ -142,6 +142,9 @@ namespace homework
             Open.Enqueue(source);
             vis[source] = 1;  //vis有值代表访问过，值代表深度
             res[vis[source]].Add(new Node(source, vis[source]));
+            res[0].Add(new Node(source, vis[source]));
+            //新增：利用闲置的res[0]这一行，进行存储遍历顺序
+            int num = 1;//表示节点遍历表的总数目
 
 
             while (que.Count > 0)
@@ -155,16 +158,17 @@ namespace homework
                     //对当前节点的子节点的操作：加入指定深度的res中
                     //对res[vis[now]][res[vis[now]].Count-1]的元素子节点，添加为当前节点的子节点
                     //将子节点加入open表中
-
-
                     if (vis[nodeList[now][i].t] == 0)//子节点未遍历,亦即不在closed表中
                     {
+                        num++;
+                       //加入open表，更新搜索表，遍历顺序
                         Open.Enqueue(nodeList[now][i].t);//加入open表中,不管是不是目标节点
-                                                         //Open.Enqueue(thisNode_id);
+                        
 
                         if (nodeList[now][i].t == target)//找到目标节点，存入res，更新有关信息即可
                         {
                             vis[nodeList[now][i].t] = vis[nodeList[now][i].s] + 1; // 子节点深度 (为父深度 + 1)
+                            res[0].Add(new Node(nodeList[now][i].t, vis[nodeList[now][i].t]));//遍历顺序记录
 
                             int thisNode_id = nodeList[now][i].t;
                             int thisNode_dep = vis[thisNode_id];
@@ -185,7 +189,7 @@ namespace homework
                             }
                             res[vis[now]][child_index].child.Add(thisNode_id);//添加子节点的信息
 
-
+                            res[0][0].depth = num;
                             MessageBox.Show("从节点 " + source + " 到节点 " + target + " 的通路找到了！");
                             return res;
                         }
@@ -193,6 +197,8 @@ namespace homework
                         {
                             vis[nodeList[now][i].t] = vis[nodeList[now][i].s] + 1; // 子节点深度 (为父深度 + 1)
                                                                                    //now == nodeList[now][i].s
+                            res[0].Add(new Node(nodeList[now][i].t, vis[nodeList[now][i].t]));//遍历顺序记录
+
                             int thisNode_id = nodeList[now][i].t;
                             int thisNode_dep = vis[thisNode_id];
                             que.Enqueue(thisNode_id);
@@ -218,6 +224,7 @@ namespace homework
                 }
                 que.Dequeue();// 首节点出队
             }
+            
             MessageBox.Show("从节点 " + source + " 到节点 " + target + " 不存在通路");
             return res;
 

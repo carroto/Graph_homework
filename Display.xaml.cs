@@ -26,6 +26,13 @@ namespace homework
         Point _mouseDownControlPosition;
         Canvas _canvas;
 
+        List<List<Node>> tree_bfs;
+        List<List<Node>> tree_dfs;
+        List<List<Node>> tree_dls;//深度受限
+        List<List<Node>> tree_ucs;//等代价
+        List<List<Node>> tree_ids;//迭代加深
+        List<List<Node>> tree_be_fs;//最佳优先
+
         public partial class Quantity
         {
             public int count;
@@ -34,7 +41,7 @@ namespace homework
                 this.count = 0;
             }
         }
-        Quantity execute_count = new Quantity();
+        Quantity Execute_Count = new Quantity();
         public Display()
         {
             InitializeComponent();
@@ -113,11 +120,11 @@ namespace homework
                     MessageBox.Show("未选择算法！请重新选择！");
                     break;
                 case "广度优先搜索":
-                    List<List<Node>> tree_bfs = Graph.temp.Breadth_first_search(start, target);
+                    tree_bfs = Graph.temp.Breadth_first_search(start, target);
                     Draw.Generate_tree(ref playground, Graph.temp, tree_bfs, Graph.temp.count);
                     break;
                 case "深度优先搜索":
-                    List<List<Node>> tree_dfs = Graph.temp.Deep_first_search(start,target);
+                    tree_dfs = Graph.temp.Deep_first_search(start,target);
                     Draw.Generate_tree(ref playground,Graph.temp, tree_dfs, Graph.temp.count);
                     break;
                 case "深度受限搜索":
@@ -131,11 +138,88 @@ namespace homework
             }
 
         }
+        /// <summary>
+        /// 根据单步执行的次数进行原位置上的覆盖式重绘
+        /// 故在算法内部须维护一个搜索顺序表
+        /// 利用空余的res【0】进行存储！
+        /// </summary>
+        /// <param name="playground"></param>
+        /// <param name="data"></param>
+        /// <param name="count"></param>
+        public void Single_Step(ref Canvas playground,List<List<Node>> data,int Execute_Count)
+        {
 
+            //从data[0]获取遍历顺序，从data找到对应节点，重绘制指定个数的节点进行覆盖
+            int index = 0;
+            for(int i = 1; i <= Execute_Count; i++)
+            {
+                Node new_node = data[0][i];//只有id和depth信息，无x，y
+                for(int j = 1; j <= data[new_node.depth].Count-1; j++)
+                {
+                    //找下标
+                    if (data[new_node.depth][j].id == new_node.id)
+                    {
+                        index = j;
+                    }
+                }
+                double x = data[new_node.depth][index].x;
+                double y = data[new_node.depth][index].y;
+                double r = 25;
+                //开始画圆！！
+
+                Ellipse e = new Ellipse();
+                TextBlock l = new TextBlock();
+                l.Text = Convert.ToString(data[0][i].id);
+                l.FontSize = 20;
+
+                //MessageBox.Show("创建位置：" + Convert.ToString(x - r) + " " + Convert.ToString(y - r));
+                Canvas.SetLeft(e, x - r); Canvas.SetTop(e, y - r);
+                Canvas.SetLeft(l, x - r / 2); Canvas.SetTop(l, y - r / 2);
+                Canvas.SetZIndex(e, 1);
+                Canvas.SetZIndex(l, 1);
+
+                e.Width = e.Height = 2 * r;
+                e.Fill = new SolidColorBrush(Color.FromRgb(0,255,255));
+                playground.Children.Add(e);
+                playground.Children.Add(l);
+            }
+        }
         private void Button_Click_2(object sender, RoutedEventArgs e)//单步执行 -- 按钮
         {
-            execute_count.count++;
-            MessageBox.Show(Convert.ToString(execute_count.count));
+            //因为每次调用generate_tree时，playground都会clear一次（控件？）
+            //
+            Execute_Count.count++;
+            //点击次数过多的判定！
+            //用res【0】【0】.depth 存储搜索节点总数
+     
+
+            string choice = Algorithm.Text;
+            switch (choice)
+            {
+                case "广度优先搜索":
+                    //点击次数过多
+                    if (Execute_Count.count > tree_bfs[0][0].depth)
+                    {
+                        MessageBox.Show("搜索过程已结束！");
+                        return;
+                    }
+                    Draw.Generate_tree(ref playground, Graph.temp, tree_bfs, Graph.temp.count);
+                    Single_Step(ref playground, tree_bfs, Execute_Count.count);
+                    break;
+                case "深度优先搜索":
+                    Draw.Generate_tree(ref playground, Graph.temp, tree_dfs, Graph.temp.count);
+                    break;
+                case "深度受限搜索":
+                    break;
+                case "迭代加深搜索":
+                    break;
+                case "等代价搜索":
+                    break;
+                case "最佳优先搜索":
+                    break;
+            }
+
+
         }
     }
 }
