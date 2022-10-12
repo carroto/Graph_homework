@@ -26,10 +26,18 @@ namespace homework
         Point _mouseDownControlPosition;
         Canvas _canvas;
 
+        public partial class Quantity
+        {
+            public int count;
+            public Quantity()
+            {
+                this.count = 0;
+            }
+        }
+        Quantity execute_count = new Quantity();
         public Display()
         {
             InitializeComponent();
-            
         }
 
         private void test_MouseDown(object sender, MouseButtonEventArgs e)
@@ -110,6 +118,7 @@ namespace homework
                 case "深度优先搜索":
                     List<List<Node>> tree_dfs = Graph.temp.Deep_first_search(start,target);
                     Draw.Generate_tree(ref playground,Graph.temp, tree_dfs, Graph.temp.count);
+                    MessageBox.Show("666");
                     break;
                 case "深度受限搜索":
                     break;
@@ -125,7 +134,8 @@ namespace homework
 
         private void Button_Click_2(object sender, RoutedEventArgs e)//单步执行 -- 按钮
         {
-            
+            execute_count.count++;
+            MessageBox.Show(Convert.ToString(execute_count.count));
         }
     }
 }

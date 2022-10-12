@@ -3,6 +3,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
+using System.Linq.Expressions;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
@@ -55,6 +56,8 @@ namespace homework
 
         public int count;/// 总结点个数
         public List<List<Edge>> nodeList;///邻接表
+        public bool isbuild;
+
         Queue<int> que;//bfs用的队列
 
         Queue<int> Open;
@@ -65,6 +68,7 @@ namespace homework
         {
             this.count = count;
             nodeList = new List<List<Edge>>();
+            isbuild = false;
             for (int i = 0; i <= count; i++) // 初始化时给邻接表开辟空间
             {
                 //多分配一个空间，日后使用从1开始
@@ -152,7 +156,7 @@ namespace homework
                     //将子节点加入open表中
 
 
-                    if (vis[nodeList[now][i].t] == 0)//节点未遍历,亦即不在closed表中
+                    if (vis[nodeList[now][i].t] == 0)//子节点未遍历,亦即不在closed表中
                     {
                         Open.Enqueue(nodeList[now][i].t);//加入open表中,不管是不是目标节点
                                                          //Open.Enqueue(thisNode_id);
@@ -166,7 +170,21 @@ namespace homework
                             que.Enqueue(thisNode_id);
 
                             res[thisNode_dep].Add(new Node(thisNode_id, thisNode_dep));//子节点加入对应的深度中
-                            res[vis[now]][res[vis[now]].Count - 1].child.Add(thisNode_id);//添加子节点的信息
+
+                            //bug，需更改
+                            //应当在res的vis[now]深度下找到 对应id的元素的下标，进行添加子节点信息
+                            //对应的下标为 res[ vis[now] ] [?] .id = now
+                            int child_index = 0;
+                            for(int j = 1; j <= res[vis[now]].Count - 1; j++)
+                            {
+                                if (res[vis[now]][j].id == now)
+                                {
+                                    child_index = j;
+                                }
+                            }
+                            res[vis[now]][child_index].child.Add(thisNode_id);//添加子节点的信息
+
+
                             MessageBox.Show("从节点 " + source + " 到节点 " + target + " 的通路找到了！");
                             return res;
                         }
@@ -179,7 +197,21 @@ namespace homework
                             que.Enqueue(thisNode_id);
 
                             res[thisNode_dep].Add(new Node(thisNode_id, thisNode_dep));//子节点加入对应的深度中
-                            res[vis[now]][res[vis[now]].Count - 1].child.Add(thisNode_id);//添加子节点的信息
+
+                            //bug,需更改
+                            //res[vis[now]][res[vis[now]].Count-1].child.Add(thisNode_id);//添加子节点的信息
+                            //bug，需更改
+                            //应当在res的vis[now]深度下找到 对应id的元素的下标，进行添加子节点信息
+                            //对应的下标为 res[ vis[now] ] [?] .id = now
+                            int child_index = 0;
+                            for (int j = 1; j <= res[vis[now]].Count - 1; j++)
+                            {
+                                if (res[vis[now]][j].id == now)
+                                {
+                                    child_index = j;
+                                }
+                            }
+                            res[vis[now]][child_index].child.Add(thisNode_id);//添加子节点的信息
                         }
                     }
                 }
