@@ -187,22 +187,41 @@ namespace homework
         private void Button_Click_2(object sender, RoutedEventArgs e)//单步执行 -- 按钮
         {
             //因为每次调用generate_tree时，playground都会clear一次（控件？）
-            //
-            Execute_Count.count++;
             //点击次数过多的判定！
             //用res【0】【0】.depth 存储搜索节点总数
-     
 
+            //避免阴间人瞎点
             string choice = Algorithm.Text;
+            if (Source_Node.Text == "" || Target_Node.Text == "" || choice == "请选择算法")
+            {//未输入信息的情况
+                MessageBox.Show("输入信息不全");
+                return;
+            }
+            int start = Convert.ToInt32(Source_Node.Text);
+            int target = Convert.ToInt32(Target_Node.Text);
+            int num_node = Graph.temp.count;//节点数目
+            if (start > num_node || target > num_node || start < 1 || target < 1)
+            {
+                MessageBox.Show("节点输入范围错误.");
+                return;
+            }
+
+
             switch (choice)
             {
                 case "广度优先搜索":
-                    //点击次数过多
-                    if (Execute_Count.count > tree_bfs[0][0].depth)
+                    //判断，不能空。不能超出范围
+                    if (tree_bfs == null)
+                    {
+                        MessageBox.Show("请先执行算法");
+                        return;
+                    }
+                    else if (Execute_Count.count > tree_bfs[0][0].depth)
                     {
                         MessageBox.Show("搜索过程已结束！");
                         return;
                     }
+                    Execute_Count.count++;
                     Draw.Generate_tree(ref playground, Graph.temp, tree_bfs, Graph.temp.count);
                     Single_Step(ref playground, tree_bfs, Execute_Count.count);
                     break;
