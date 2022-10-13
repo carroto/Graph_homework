@@ -228,9 +228,13 @@ namespace homework
 
                         //指定起点和终点的坐标
                         l.X1 = data[i][j].x; l.Y1 = data[i][j].y;
+
+//------------------------------------------------------------------------------------------------------------------------
+                        //bug！作为一个通用逻辑，不应默认子节点在下一个深度层中，应当进行数据结构的修改存储在表中的下标
+
                         //终点：data[i+1]中的某一个，只知序号不知下标，无法索引
                         //终点，须在data[i+1]中按照值寻找，返回下标
-                        int index = 0;
+                        /*int index = 0;
                         for (int t = 1; t <= data[i + 1].Count - 1; t++)
                         {
                             if (data[i + 1][t].id == data[i][j].child[k])
@@ -241,7 +245,13 @@ namespace homework
                                 break;
                             }
                         }
-                        l.X2 = data[i + 1][index].x; l.Y2 = data[i + 1][index].y;
+                        l.X2 = data[i + 1][index].x; l.Y2 = data[i + 1][index].y;*/
+
+                        int x_index = data[i][j].child[k].index_x;
+                        int y_index = data[i][j].child[k].index_y;
+                        l.X2 = data[x_index][y_index].x;
+                        l.Y2 = data[x_index][y_index].y;
+//----------------------------------------------------------------------------------------------------------------------
                         Canvas.SetZIndex(l, 0);
                         ///////////---------------以下为确定箭头终点-----------------------------------------------------//////////////
                         double K = (l.Y2 - l.Y1) / (l.X2 - l.X1);
@@ -251,7 +261,7 @@ namespace homework
                         //即  l.x1 > l.x2 时结果正确
                         double xm = l.X2;
                         double ym = l.Y2;
-                        if (l.X1 < l.X2)
+                        if (l.X1 <= l.X2)
                         {
                             xm -= r * Math.Cos(Math.Atan(K));
                             ym -= r * Math.Sin(Math.Atan(K));

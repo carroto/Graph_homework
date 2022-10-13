@@ -128,8 +128,12 @@ namespace homework
                     Draw.Generate_tree(ref playground,Graph.temp, tree_dfs, Graph.temp.count);
                     break;
                 case "深度受限搜索":
+                    tree_dls = Graph.temp.Depth_limit_search(start, target);
+                    Draw.Generate_tree(ref playground,Graph.temp,tree_dls, Graph.temp.count);
                     break;
                 case "迭代加深搜索":
+                    tree_ids = Graph.temp.Iterative_deepening_search(start, target);
+                    Draw.Generate_tree(ref playground,Graph.temp,tree_ids, Graph.temp.count);
                     break;
                 case "等代价搜索":
                     break;
@@ -226,11 +230,52 @@ namespace homework
                     Single_Step(ref playground, tree_bfs, Execute_Count.count);
                     break;
                 case "深度优先搜索":
+                    //判断，不能空。不能超出范围
+                    if (tree_dfs == null)
+                    {
+                        MessageBox.Show("请先执行算法");
+                        return;
+                    }
+                    else if (Execute_Count.count > tree_dfs[0][0].depth)
+                    {
+                        MessageBox.Show("搜索过程已结束！");
+                        return;
+                    }
+                    Execute_Count.count++;
                     Draw.Generate_tree(ref playground, Graph.temp, tree_dfs, Graph.temp.count);
+                    Single_Step(ref playground, tree_dfs, Execute_Count.count);
                     break;
                 case "深度受限搜索":
+                    //判断，不能空。不能超出范围
+                    if (tree_dls == null)
+                    {
+                        MessageBox.Show("请先执行算法");
+                        return;
+                    }
+                    else if (Execute_Count.count > tree_dls[0][0].depth)
+                    {
+                        MessageBox.Show("搜索过程已结束！");
+                        return;
+                    }
+                    Execute_Count.count++;
+                    Draw.Generate_tree(ref playground, Graph.temp, tree_dls, Graph.temp.count);
+                    Single_Step(ref playground, tree_dls, Execute_Count.count);
                     break;
                 case "迭代加深搜索":
+                    //判断，不能空。不能超出范围
+                    if (tree_ids == null)
+                    {
+                        MessageBox.Show("请先执行算法");
+                        return;
+                    }
+                    else if (Execute_Count.count > tree_ids[0][0].depth)
+                    {
+                        MessageBox.Show("搜索过程已结束！");
+                        return;
+                    }
+                    Execute_Count.count++;
+                    Draw.Generate_tree(ref playground, Graph.temp, tree_ids, Graph.temp.count);
+                    Single_Step(ref playground, tree_ids, Execute_Count.count);
                     break;
                 case "等代价搜索":
                     break;
