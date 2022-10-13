@@ -31,7 +31,7 @@ namespace homework
                 this.y = y;
             }
         }
-        
+
         /// <summary>
         /// 初始界面绕圈绘图函数，
         /// </summary>
@@ -43,7 +43,9 @@ namespace homework
         {
             playground.Children.Clear();
             double R = 150; double x0 = 283; double y0 = 194; double r = 25;
+
             double du = 2 * 3.1415926535 / count;
+
             List<graph_node> graph_data = new List<graph_node>();
             graph_data.Add(new graph_node());
 
@@ -54,6 +56,7 @@ namespace homework
                 TextBlock l = new TextBlock();
                 l.Text = Convert.ToString(i);
                 l.FontSize = 20;
+
                 double y = y0 - Math.Cos(du * i) * R;
                 double x = x0 + Math.Sin(du * i) * R;
 
@@ -62,6 +65,7 @@ namespace homework
                 Canvas.SetLeft(l, x); Canvas.SetTop(l, y);
                 Canvas.SetZIndex(e, 1);
                 Canvas.SetZIndex(l, 1);
+
                 graph_data.Add(new graph_node(i, x + r / 2, y + r / 2));
                 e.Width = e.Height = 2 * r;
                 e.Fill = new SolidColorBrush(Color.FromRgb(108, 165, 178));
@@ -127,13 +131,13 @@ namespace homework
         {
             Line l1 = new Line();
             Line l2 = new Line();
-            //testTarget(ref playground, hx, hy); // 测试箭头顶点位置是否正确
+
             l1.X1 = hx; l1.Y1 = hy; l2.X1 = hx; l2.Y1 = hy;
             double Xa = 0; double Ya = 0; double Xb = 0; double Yb = 0;
             double k = (L.Y1 - L.Y2) / (L.X1 - L.X2); // 直线的斜率
             double alpha = Math.Atan(k);
 
-            if(hx > L.X1) // 一四象限
+            if (hx > L.X1) // 一四象限
             {
                 Xa = hx - a * Math.Sin(PI / 2 - alpha - theta);
                 Ya = hy - a * Math.Cos(PI / 2 - alpha - theta);
@@ -147,16 +151,16 @@ namespace homework
                 Xb = hx + a * Math.Sin(PI / 2 - alpha + theta);
                 Yb = hy + a * Math.Cos(PI / 2 - alpha + theta);
             }
-            
-            l1.X2 = Xa;l1.Y2 = Ya; l2.X2 = Xb; l2.Y2 = Yb;
-            l1.Stroke = Brushes.Black;l2.Stroke = Brushes.Black;
+
+            l1.X2 = Xa; l1.Y2 = Ya; l2.X2 = Xb; l2.Y2 = Yb;
+            l1.Stroke = Brushes.Black; l2.Stroke = Brushes.Black;
             l1.StrokeThickness = 3; l2.StrokeThickness = 3;
             Canvas.SetZIndex(l1, 10); Canvas.SetZIndex(l2, 10);
             playground.Children.Add(l1);
             playground.Children.Add(l2);
 
         }
-        
+
         /// <summary>
         /// 绘制搜索树
         /// </summary>
@@ -164,19 +168,15 @@ namespace homework
         /// <param name="graph">图</param>
         /// <param name="data">搜索节点信息表</param>
         /// <param name="count">节点数目</param>
-        public static void Generate_tree(ref Canvas playground,Graph graph,List<List<Node>> data,int count)
+        public static void Generate_tree(ref Canvas playground, Graph graph, List<List<Node>> data, int count)
         {
             playground.Children.Clear();
 
             double x0 = 30; double y0 = 200; double r = 25;
             double x_gap = 125; double y_gap = 80;//横向和竖向的偏移量
 
-            //switch?
-            //List<List<Node>> res = graph.bfs(1, 3, true);
-            //由生成的数组进行生成搜索树
-
             //画圆，更新坐标信息
-           for(int i=1; i <= data.Count-1; i++)
+            for (int i = 1; i <= data.Count - 1; i++)
             {//对深度进行遍历
              //当前深度下的所有节点进行绘制
              //一个深度对应一个横坐标
@@ -188,7 +188,7 @@ namespace homework
                 double y_top = y0 - (num / 2) * y_gap;
 
                 //画圆
-                for (int j=1; j<= data[i].Count-1; j++)
+                for (int j = 1; j <= data[i].Count - 1; j++)
                 {
                     //从上往下依次排开
                     y = y_top + (j - 1) * y_gap;
@@ -202,7 +202,7 @@ namespace homework
                     l.FontSize = 20;
 
                     Canvas.SetLeft(e, x - r); Canvas.SetTop(e, y - r);
-                    Canvas.SetLeft(l, x - r/2); Canvas.SetTop(l, y - r/2);
+                    Canvas.SetLeft(l, x - r / 2); Canvas.SetTop(l, y - r / 2);
                     Canvas.SetZIndex(e, 1);
                     Canvas.SetZIndex(l, 1);
 
@@ -212,14 +212,13 @@ namespace homework
                     playground.Children.Add(l);
                 }
             }
-            
-           //画直线和箭头
-            for (int i = 1; i <= data.Count-1; i++)
+            //画直线和箭头
+            for (int i = 1; i <= data.Count - 1; i++)
             {// i 按深度遍历
-                for(int j = 1; j <=data[i].Count-1; j++)
+                for (int j = 1; j <= data[i].Count - 1; j++)
                 {
                     //j 遍历该深度下的节点
-                    for(int k = 1; k <= data[i][j].child.Count-1; k++)
+                    for (int k = 1; k <= data[i][j].child.Count - 1; k++)
                     {
                         //对每个节点及其子节点进行绘制直线和箭头
                         //k 遍历  当前子节点.child 中的节点
@@ -232,7 +231,7 @@ namespace homework
                         //终点：data[i+1]中的某一个，只知序号不知下标，无法索引
                         //终点，须在data[i+1]中按照值寻找，返回下标
                         int index = 0;
-                        for (int t = 1; t <= data[i+1].Count-1; t++)
+                        for (int t = 1; t <= data[i + 1].Count - 1; t++)
                         {
                             if (data[i + 1][t].id == data[i][j].child[k])
                             {
@@ -270,3 +269,4 @@ namespace homework
         }
     }
 }
+

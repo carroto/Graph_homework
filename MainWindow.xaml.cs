@@ -24,15 +24,14 @@ namespace homework
     public partial class MainWindow : Window
     {
         Graph graph;
-        
-        
+
         public MainWindow()
         {
             InitializeComponent();
         }
 
 
-        private void Button_Click_1(object sender, RoutedEventArgs e)//建图函数
+        private void Button_Click_1(object sender, RoutedEventArgs e)//建图
         {
             if (count_input.Text == "") MessageBox.Show("请输入节点总数");
             else if (node_input.Text == "") MessageBox.Show("请输入建图节点");
@@ -51,6 +50,7 @@ namespace homework
                     //count_input 为输入的节点个数
 
                     //posiible illegal input:
+
                     //number
                     //number-space:2
                     //number-space-number:2
@@ -62,7 +62,7 @@ namespace homework
                     if((temp.Length != 3 && temp.Length != 2) || s == "\r\n")
                     {
                         //第一种错误输入，特殊错误输入
-                        MessageBox.Show("Input error!\r\n Do not end with 'Enter'\r\nInput include origin destination （weight）");
+                        MessageBox.Show("  输入错误!\r\n 1.不能有换行\r\n2.值不能超出范围\r\n3.权重不输入则默认为1");
                         break;
                         return;
                     }
@@ -73,7 +73,7 @@ namespace homework
                         int last = s.LastIndexOf(' ');
                         if(last == s.Length - 1)
                         {
-                            MessageBox.Show("Input error!\r\n Do not end with 'Enter'\r\nInput include origin destination （weight）");
+                            MessageBox.Show("  输入错误!\r\n 1.不能有换行\r\n2.值不能超出范围\r\n3.权重不输入则默认为1");
                             break;
                             return;
                         }
@@ -90,7 +90,7 @@ namespace homework
                         int last = s.LastIndexOf(' ');
                         if (last == s.Length - 1)
                         {
-                            MessageBox.Show("Input error!\r\n Do not end with 'Enter'\r\nInput include origin destination （weight）");
+                            MessageBox.Show("  输入错误!\r\n 1.不能有换行\r\n2.值不能超出范围\r\n3.权重不输入则默认为1");
                             break;
                             return;
                         }
@@ -102,10 +102,11 @@ namespace homework
 
                     if (a > count || b > count)
                     {
-                        MessageBox.Show("Input error!\r\n Do not end with 'Enter'\r\nInput include origin destination （weight）");
+                        MessageBox.Show("  输入错误!\r\n 1.不能有换行\r\n2.值不能超出范围\r\n3.权重不输入则默认为1");
                         break;
                         return;
                     }
+
 
                     graph.add(a, b, c);         // 加边
                     if(directed.IsChecked == false) graph.add(b, a, c);
@@ -116,25 +117,23 @@ namespace homework
                 Draw.Generate_Graph(ref playground, graph, ((directed.IsChecked == true) ? true : false), count);// 绘制图形
 
                 Graph.temp = graph;
+
+                graph.isbuild = true;
             }
         }
 
         
-
         
-        
-        private void Button_Click(object sender, RoutedEventArgs e)//新界面进行树的相关操作
+        private void Button_Click(object sender, RoutedEventArgs e)//算法研究
         {
+            if(graph.isbuild == false)
+            {
+                MessageBox.Show("请先建立图！");//待修复
+                return;
+            }
             var t = new Display();
             t.ShowDialog();
             
-        }
-
-        private void Button_Click_2(object sender, RoutedEventArgs e)
-        {
-            int source = 1;
-            int target = 4;
-            graph.bfs(source, target, true);
         }
     }
 
