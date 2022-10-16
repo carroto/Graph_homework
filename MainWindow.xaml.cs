@@ -46,7 +46,6 @@ namespace homework
 
                 for(int i = 0; i < linecount; i++)
                 {
-                    string s = node_input.GetLineText(i);
                     //count_input 为输入的节点个数
 
                     //posiible illegal input:
@@ -57,7 +56,7 @@ namespace homework
                     //number-space-number-space:3
 
                     //right:number-space-number-space-number3
-
+                    string s = node_input.GetLineText(i);
                     string[] temp = s.Split(' ');
                     if((temp.Length != 3 && temp.Length != 2) || s == "\r\n")
                     {
@@ -81,12 +80,9 @@ namespace homework
                         b = Convert.ToInt32(temp[1]);
                         c = Convert.ToInt32(temp[2]);
                     }
-
                     if (temp.Length == 2)
                     {
-                        //针对第二、三种输入情形的特判
-                        //三 没有权重输入，可以生成
-                        //二 输入错误，应当检查
+                        //针对第二、三种输入情形的特判,三 没有权重输入，可以生成,二 输入错误，应当检查
                         int last = s.LastIndexOf(' ');
                         if (last == s.Length - 1)
                         {
@@ -98,21 +94,17 @@ namespace homework
                         b = Convert.ToInt32(temp[1]);
                         c = 1;
                     }
-
-
                     if (a > count || b > count)
                     {
                         MessageBox.Show("  输入错误!\r\n 1.不能有换行\r\n2.值不能超出范围\r\n3.权重不输入则默认为1");
                         break;
                         return;
                     }
-
-
                     graph.add(a, b, c);         // 加边
                     if(directed.IsChecked == false) graph.add(b, a, c);
                 }
 
-                List<List<Edge>> res = graph.getList(); // 取建图邻接表
+                //List<List<Edge>> res = graph.getList(); // 取建图邻接表
 
                 Draw.Generate_Graph(ref playground, graph, ((directed.IsChecked == true) ? true : false), count);// 绘制图形
 

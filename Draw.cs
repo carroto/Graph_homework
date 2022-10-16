@@ -48,7 +48,6 @@ namespace homework
 
             List<graph_node> graph_data = new List<graph_node>();
             graph_data.Add(new graph_node());
-
             //画圆
             for (int i = 1; i <= count; i++)
             {
@@ -60,7 +59,6 @@ namespace homework
                 double y = y0 - Math.Cos(du * i) * R;
                 double x = x0 + Math.Sin(du * i) * R;
 
-                //MessageBox.Show("创建位置：" + Convert.ToString(x - r) + " " + Convert.ToString(y - r));
                 Canvas.SetLeft(e, x - r / 2); Canvas.SetTop(e, y - r / 2);
                 Canvas.SetLeft(l, x); Canvas.SetTop(l, y);
                 Canvas.SetZIndex(e, 1);
@@ -83,16 +81,11 @@ namespace homework
                     Line l = new Line(); // 该直线为图中连线
                     l.Stroke = Brushes.Black;
                     l.StrokeThickness = 3;
-                    //指定起点和终点的坐标
-                    l.X1 = graph_data[i].x; l.Y1 = graph_data[i].y;
+                    l.X1 = graph_data[i].x; l.Y1 = graph_data[i].y; //指定起点和终点的坐标
                     l.X2 = graph_data[nodeslist[i][j].t].x; l.Y2 = graph_data[nodeslist[i][j].t].y;
                     Canvas.SetZIndex(l, 0);
                     ///////////---------------以下为确定箭头终点-----------------------------------------------------//////////////
                     double k = (l.Y2 - l.Y1) / (l.X2 - l.X1);
-                    //- -   右半区+下顶点正确
-                    //即  l.x1 < l.x2 时结果正确
-                    //+ +  左半区+上顶点正确
-                    //即  l.x1 > l.x2 时结果正确
                     double xm = l.X2;
                     double ym = l.Y2;
                     if (l.X1 < l.X2)
@@ -105,7 +98,6 @@ namespace homework
                         xm += r * Math.Cos(Math.Atan(k));
                         ym += r * Math.Sin(Math.Atan(k));
                     }
-
                     playground.Children.Add(l);
                     if (directed == true) Draw.DrawArrow(ref playground, xm, ym, Draw.PI / 6, 12, l);
                 }

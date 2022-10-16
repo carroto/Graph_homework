@@ -222,12 +222,8 @@ namespace homework
 
                             res[thisNode_dep].Add(new Node(thisNode_id, thisNode_dep));//子节点加入对应的深度中
 
-                            
-                            //res[vis[now]][res[vis[now]].Count-1].child.Add(thisNode_id);//添加子节点的信息
-                            //bug，需更改
                             //应当在res的vis[now]深度下找到 对应id的元素的下标，进行添加子节点信息
                             //对应的下标为 res[ vis[now] ] [?] .id = now
-
                             //在当前节点的child字段里加入子节点的信息
                             int child_index = 0;
                             for (int j = 1; j <= res[vis[now]].Count - 1; j++)
@@ -485,8 +481,127 @@ namespace homework
         }
         public List<List<Node>> Uniform_cost_research(int source, int target)
         {
+            if (nodeList == null)  // 特判:是否建图出错
+            {
+                MessageBox.Show("BFS 失败：当前图为空");
+                return null;
+            }
+            int[] cost = new int[count + 1];//代价数组
+            //代价函数等于原点和该点之间便利通路的权重之和
+            //cost【子节点】 = cost【父节点】+ nodelist[father][child].w 
+
             List<List<Node>> res = new List<List<Node>>();
+            Open = new Queue<int>();
+            Close = new Queue<int>();
+            que = new Queue<int>();
+            int[] vis = new int[count + 1];//标记是否访问，记录深度
+
+            for (int i = 0; i <= count; i++)
+            {
+                //count 个节点。最大深度即为depth = count
+                res.Add(new List<Node>()); // depth=i 的层
+                res[i].Add(new Node(0, 0));
+            }
+
+            que.Enqueue(source); // 将首节点入队，深度标记为1
+            Open.Enqueue(source);
+            vis[source] = 1;  //vis有值代表访问过，值代表深度
+            res[vis[source]].Add(new Node(source, vis[source]));
+            res[0].Add(new Node(source, vis[source]));
+            //新增：利用闲置的res[0]这一行，进行存储遍历顺序
+            int num = 1;//表示节点遍历表的总数目
+            cost[source] = 0;
+
+            while (que.Count > 0)
+            {
+                int now = que.First();
+                Open.Dequeue();//open表第一个节点出队，加入closed表中
+
+
+                for (int i = 1; i <= nodeList[now].Count - 1; i++)
+                {
+                    //对当前节点的子节点的操作：加入指定深度的res中
+                    //对res[vis[now]][res[vis[now]].Count-1]的元素子节点，添加为当前节点的子节点
+                    //将子节点加入open表中
+                    //更新代价
+                    if (vis[nodeList[now][i].t] == 0)//子节点未遍历,亦即不在closed表中
+                    {
+                        num++;
+                        //加入open表，更新搜索表，遍历顺序
+                        Open.Enqueue(nodeList[now][i].t);//加入open表中,不管是不是目标节点
+                        cost[nodeList[now][i].t] = cost[nodeList[now][i].s] + nodeList[now][i].w;
+
+                        if (nodeList[now][i].t == target)//找到目标节点，存入res，更新有关信息即可
+                        {
+                            vis[nodeList[now][i].t] = vis[nodeList[now][i].s] + 1; // 子节点深度 (为父深度 + 1)
+                            res[0].Add(new Node(nodeList[now][i].t, vis[nodeList[now][i].t]));//遍历顺序记录
+
+                            int thisNode_id = nodeList[now][i].t;
+                            int thisNode_dep = vis[thisNode_id];
+                            que.Enqueue(thisNode_id);
+
+                            res[thisNode_dep].Add(new Node(thisNode_id, thisNode_dep));//子节点加入对应的深度中
+
+
+                            //应当在res的vis[now]深度下找到 对应id的元素的下标，进行添加子节点信息
+                            //对应的下标为 res[ vis[now] ] [?] .id = now
+                            //在当前节点的child字段里加入子节点的信息
+                            int child_index = 0;
+                            for (int j = 1; j <= res[vis[now]].Count - 1; j++)
+                            {
+                                if (res[vis[now]][j].id == now)
+                                {
+                                    child_index = j;
+                                }
+                            }
+                            int index_x = thisNode_dep;//当前子节点的深度，即在res中的x坐标
+                            int index_y = res[thisNode_dep].Count - 1;//子节点是新加进来的，必然是最后一个
+                            res[vis[now]][child_index].child.Add(new Children(thisNode_id, index_x, index_y));//添加子节点的信息
+
+                            res[0][0].depth = num;
+                            MessageBox.Show("从节点 " + source + " 到节点 " + target + " 的通路找到了！");
+                            return res;
+                        }
+                        else//不是目标节点
+                        {
+                            vis[nodeList[now][i].t] = vis[nodeList[now][i].s] + 1; // 子节点深度 (为父深度 + 1)
+                                                                                   //now == nodeList[now][i].s
+                            res[0].Add(new Node(nodeList[now][i].t, vis[nodeList[now][i].t]));//遍历顺序记录
+
+                            int thisNode_id = nodeList[now][i].t;
+                            int thisNode_dep = vis[thisNode_id];
+                            que.Enqueue(thisNode_id);
+
+                            res[thisNode_dep].Add(new Node(thisNode_id, thisNode_dep));//子节点加入对应的深度中
+
+
+                            //res[vis[now]][res[vis[now]].Count-1].child.Add(thisNode_id);//添加子节点的信息
+                            //bug，需更改
+                            //应当在res的vis[now]深度下找到 对应id的元素的下标，进行添加子节点信息
+                            //对应的下标为 res[ vis[now] ] [?] .id = now
+
+                            //在当前节点的child字段里加入子节点的信息
+                            int child_index = 0;
+                            for (int j = 1; j <= res[vis[now]].Count - 1; j++)
+                            {
+                                if (res[vis[now]][j].id == now)
+                                {
+                                    child_index = j;
+                                }
+                            }
+                            int index_x = thisNode_dep;//当前子节点的深度，即在res中的x坐标
+                            int index_y = res[thisNode_dep].Count - 1;//子节点是新加进来的，必然是最后一个
+                            res[vis[now]][child_index].child.Add(new Children(thisNode_id, index_x, index_y));//添加子节点的信息
+                        }
+                    }
+                }
+                que.Dequeue();// 首节点出队
+                //ReOrder_queue(que,cost);
+            }
+
+            MessageBox.Show("从节点 " + source + " 到节点 " + target + " 不存在通路");
             return res;
+
         }
         public List<List<Node>> Iterative_deepening_search(int source, int target)
         {
@@ -522,29 +637,6 @@ namespace homework
             //      按遍历的次序绘制箭头，形成搜索树
             res[0].Add(new Node(source, vis[source]));
             res[vis[source]].Add(new Node(source, vis[source]));
-
-            /*while (true)
-            {
-                while(temp.Count > 0)
-                {
-                    int now = temp.Peek();
-                    temp.Pop();
-                    if (now == target)
-                    {
-                        //找到解
-                    }
-                    else
-                    {
-                        if (vis[now] < d)
-                        {
-                            //操作子节点
-                        }
-                    }
-                }
-                d = d + 1;
-                temp.Push(source);
-            }*/
-
             while (true)
             {
                 int mid = 0;
@@ -560,6 +652,7 @@ namespace homework
                     num++;
                     if (vis[now] >= d)
                     {
+                        mid = now;
                         break;
                     }
 
@@ -606,7 +699,7 @@ namespace homework
                     }
                     if(temp.Count == 0)
                     {
-                        mid = now;
+                        MessageBox.Show("empty stack");
                         break;
                     }
                     res[0].Add(new Node(temp.Peek(), vis[temp.Peek()]));
@@ -649,5 +742,33 @@ namespace homework
             return res;
         }
 
+
+        /*public Queue<int> ReOrder_queue(Queue<int> data, int[] cost)
+        {
+            //将栈data的元素,按照cost数组的信息重新升序排列
+     
+            int[] cos = new int[data.Count];
+            int[] id = new int[data.Count];
+            List<Node> res = new List<Node>();
+            res.Add(new Node(0, 0));
+
+            int num = 0;
+            while(data.Count > 0)
+            {
+                num++;
+                id[num] = data.First();
+                cos[num] = cost[id[num]];
+                res.Add(new)
+
+                data.Dequeue();
+            }
+
+            Array.Sort(cos);
+            for(int j = 1;j<= cos.Length - 1; j++)
+            {
+                data.Enqueue(cos[j]);
+            }
+            return data;
+        }*/
     }
 }
